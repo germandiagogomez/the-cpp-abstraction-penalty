@@ -1,4 +1,3 @@
-
 #include <bitset>
 #include <chrono>
 #include <iostream>
@@ -81,5 +80,5 @@ int main() {
     std::tie(total_time, std::ignore) =
         time_it([] { return execute_sieve<100'000'000u>(); });
 
-    std::cout << total_time.count() << "ms" << std::endl;
+    std::cout << total_time.count();
 }

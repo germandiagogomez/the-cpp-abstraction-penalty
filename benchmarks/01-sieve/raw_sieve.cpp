@@ -21,11 +21,11 @@ auto time_it(F && f) {
 template <std::size_t UpToNumber>
 class sieve_table {
 public:
-    void set(std::size_t nat_number, bool value = true) {
+    void set(std::size_t nat_number, bool value = true) noexcept {
         repr_.set((nat_number / 2) - 1, value);
     }
 
-    constexpr std::size_t size() const {
+    constexpr std::size_t size() const noexcept {
         return repr_.size();
     }
 
@@ -34,13 +34,13 @@ private:
 };
 
 
-constexpr std::size_t ct_sqrt(std::size_t n, std::size_t i = 1) {
+constexpr std::size_t ct_sqrt(std::size_t n, std::size_t i = 1) noexcept {
     return n == i ? n : (i * i < n ? ct_sqrt(n, i + 1) : i);
 }
 
 
 template <std::size_t NatNumber>
-void mark_sieve_for_number(sieve_table<NatNumber> & table, int current_number) {
+void mark_sieve_for_number(sieve_table<NatNumber> & table, int current_number) noexcept {
     std::size_t sieve_start = current_number * current_number;
     table.set(sieve_start);
 
@@ -57,7 +57,7 @@ void mark_sieve_for_number(sieve_table<NatNumber> & table, int current_number) {
 
 
 template <std::size_t NatNumber>
-sieve_table<NatNumber> execute_sieve() {
+sieve_table<NatNumber> execute_sieve() noexcept {
     sieve_table<NatNumber> table;
 
     for (int i = 3; i < ct_sqrt(NatNumber); i += 2) {
@@ -72,5 +72,5 @@ int main() {
     std::tie(total_time, std::ignore) =
         time_it([] { return execute_sieve<100'000'000u>(); });
 
-    std::cout << total_time.count() << "ms" << std::endl;
+    std::cout << total_time.count();
 }
