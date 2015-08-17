@@ -28,15 +28,16 @@ the sieve algorithm.
 | Program          | Compiler | Optimization  | Generated assembly (normal/-fno-rtti -fno-exceptions) | Time (ms) |
 |------------------+----------+---------------+-------------------------------------------------------+-----------|
 | raw_sieve.cpp    | clang    | (None)        | 463/398                                               | N/A       |
-| raw_sieve.cpp    | clang    | -O3           | 223/109                                               |           |
+| raw_sieve.cpp    | clang    | -O3           | 223/109                                               | 2654 ms   |
 | ranges_sieve.cpp | clang    | (None)        | 12953/12653                                           | N/A       |
-| ranges_sieve.cpp | clang    | -DNDEBUG -O3  | 408/318                                               |           |
+| ranges_sieve.cpp | clang    | -DNDEBUG -O3  | 408/318                                               | 1692 ms   |
 |------------------+----------+---------------+-------------------------------------------------------+-----------|
 | raw_sieve.cpp    | gcc      | (None)        | 763/763                                               | N/A       |
-| raw_sieve.cpp    | gcc      | -O3           | 192/192                                               |           |
+| raw_sieve.cpp    | gcc      | -O3           | 192/192                                               | 2771 ms   |
 | ranges_sieve.cpp | gcc      | (None)        | 28827/27912                                           | N/A       |
-| ranges_sieve.cpp | gcc      | -DNDEBGUG -O3 | 806/762                                               |           |
+| ranges_sieve.cpp | gcc      | -DNDEBGUG -O3 | 806/762                                               | 17904 ms  |
 |------------------+----------+---------------+-------------------------------------------------------+-----------|
+
 
 - [[./benchmarks/01-sieve/raw_sieve.cpp][Raw sieve]].
 - [[./benchmarks/01-sieve/ranges_sieve.cpp][Ranges Sieve]].
