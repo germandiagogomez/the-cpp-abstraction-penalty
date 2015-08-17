@@ -24,6 +24,10 @@ benchmark: $(TARGETS)
 	./scripts/execute-benchmarks.sh $(TARGETS)
 
 
+benchplot.png:
+	scripts/make-plots.sh clang++ g++-5
+
+
 clean:
 	-rm -rf $(CLEANFILES)
 

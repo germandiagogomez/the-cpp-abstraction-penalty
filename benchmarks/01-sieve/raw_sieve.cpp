@@ -72,5 +72,5 @@ int main() {
     std::tie(total_time, std::ignore) =
         time_it([] { return execute_sieve<100'000'000u>(); });
 
-    std::cout << total_time.count();
+    std::cout << total_time.count() << '\n';
 }

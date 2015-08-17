@@ -1,10 +1,18 @@
 #!/usr/bin/env sh
 
+COMPILERS=${@:1}
+EXECUTABLES="raw_sieve ranges_sieve"
 
-NAMES="raw_sieve-clang++-benchdata.dat ranges_sieve-clang++-benchdata.dat raw_sieve-g++-5-benchdata.dat ranges_sieve-g++-5-benchdata.dat"
+for compiler in ${COMPILERS}; do
+    make benchmark CXX=${compiler}
+done
 
-make benchmark
-make benchmark g++-5
+for compiler in ${COMPILERS}; do
+    for executable in ${EXECUTABLES}; do
+        cat ${executable}-${compiler}.dat >> all-benchmarks.dat
+    done
+done
 
-cat ${NAMES} > data.dat
+
+
 #gnuplot scripts/plot_data.plt
