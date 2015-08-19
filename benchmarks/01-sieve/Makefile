@@ -1,37 +1,36 @@
 CXX := clang++
 CPPFLAGS := -DNDEBUG
 CXXFLAGS := -std=c++14 -O3
-INCLUDES := -I/Users/germandiago/range-v3/include
+
+srcdir := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+VPATH := $(srcdir)
+
+builddir := build-$(CXX)
+objdir := $(builddir)/.objs
 
 
-TARGETS := raw_sieve-$(CXX) ranges_sieve-$(CXX)
-CLEANFILES := raw_sieve-$(CXX).dat ranges_sieve-$(CXX).dat \
-		$(TARGETS) data.dat
+MKDIR_P := mkdir -p
+SOURCES := raw_sieve.cpp ranges_sieve.cpp
+TARGETS := $(foreach s,$(SOURCES:.cpp=),$(builddir)/$(s))
+OBJECTS := $(foreach s,$(SOURCES:.cpp=.o),$(objdir)/$(s))
+ranges_sieve_INCLUDES := -I/Users/germandiago/range-v3/include
+
 
 all: $(TARGETS)
 
+$(TARGETS): $(builddir)/% : $(objdir)/%.o
+	$(CXX) $< -o $@
 
-raw_sieve-$(CXX): raw_sieve.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+$(objdir)/%.o:%.cpp | $(objdir)
+	$(CXX) $($(basename $(notdir $@))_INCLUDES) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-
-ranges_sieve-$(CXX): ranges_sieve.cpp
-	$(CXX) $(CPPFLAGS) $(INCLUDES) $(CXXFLAGS) $< -o $@
-
+$(objdir):
+	$(MKDIR_P) $@
 
 benchmark: $(TARGETS)
-	-rm -f raw_sieve-$(CXX)-benchdata.dat ranges_sieve-$(CXX)-benchdata.dat
-	./scripts/execute-benchmarks.sh $(TARGETS)
-
-
-benchplot.png:
-	scripts/make-plots.sh clang++ g++-5
-
+	$(srcdir)/scripts/execute-benchmarks.sh $(TARGETS)
 
 clean:
-	-rm -rf $(CLEANFILES)
+	-rm -rf $(builddir)
 
-
-
-
-.PHONY: clean benchmark
+.PHONY: all benchmark clean
