@@ -1,7 +1,7 @@
 reset
 set ylabel "microseconds"
 set terminal png
-set output "benchplot.png"
+set output output_plot
 set grid ytics
 
 
@@ -15,7 +15,7 @@ set yrange [0:*]
 
 set xtics ("clang" 0.15, "g++-5" 1.15)
 
-plot "all-benchmarks.dat" every 2 u 3 title "raw sieve", \
+plot "plot-output/all-benchmarks.dat" every 2 u 3 title "raw sieve", \
      "" every 2::1 u 3 title "ranges sieve"
 
       
