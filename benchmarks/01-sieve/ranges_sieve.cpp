@@ -1,4 +1,7 @@
+#include <algorithm>
+#include <string>
 #include <bitset>
+#include <vector>
 #include <chrono>
 #include <iostream>
 #include <tuple>
@@ -75,10 +78,24 @@ sieve_table<NatNumber> execute_sieve() noexcept {
 }
 
 
-int main() {
-    c::milliseconds total_time;
-    std::tie(total_time, std::ignore) =
-        time_it([] { return execute_sieve<100'000'000u>(); });
+int main(int argc, char * argv[]) {
+    using namespace std;
 
-    std::cout << total_time.count() << '\n';
+    int times_exe = std::stoi(argv[1]);
+
+    std::vector<std::chrono::milliseconds> times;
+    times.reserve(times_exe);
+
+    for (int i = 0; i < times_exe; ++i) {
+        c::milliseconds total_time;
+        std::tie(total_time, std::ignore) =
+            time_it([] { return execute_sieve<100'000'000u>(); });
+        times.push_back(total_time);
+    }
+
+    sort(begin(times), end(times));
+    for_each(begin(times), end(times),
+             [](auto v) { std::cout << v.count() << ' '; });
+
+    std::cout << argv[0] << '\n';
 }
