@@ -53,7 +53,7 @@ included in =benchmarks/01-sieve/configure= and run =make=.
 You will also need clang++ and g++-5.
 
 #+BEGIN_src sh
-git clone https://github.com/germandiagogomez/cpp-benchmarks.git
+git clone https://github.com/germandiagogomez/the-cpp-abstraction-penalty.git
 git submodule init
 git submodule update
 cd benchmarks/01-sieve
