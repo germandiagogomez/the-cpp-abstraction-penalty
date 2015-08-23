@@ -19,7 +19,8 @@ TARGETS := $(SOURCES:.cpp=)
 OBJECTS := $(foreach s,$(SOURCES:.cpp=.o),$(objdir)/$(s))
 BENCH_DATA := $(SOURCES:.cpp=.dat)
 
-ranges_sieve_INCLUDES := -I/Users/germandiago/range-v3/include
+ranges_sieve_INCLUDES := -I$(srcdir)/../../submodules/range-v3/include
+
 
 all: $(TARGETS)
 

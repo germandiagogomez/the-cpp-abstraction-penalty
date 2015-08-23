@@ -1,5 +1,5 @@
 reset
-set ylabel "microseconds"
+set ylabel "milliseconds"
 set terminal png
 set output output_plot
 set grid ytics

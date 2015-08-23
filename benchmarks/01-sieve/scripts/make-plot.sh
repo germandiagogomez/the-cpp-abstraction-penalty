@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
 
+[ $# -lt 2 ] && echo "Usage: make-plot.sh <plot-out-dir> <compiler>..." && exit 1
+
 plotdir=$1
 shift
 
+#Shamelessly copied from Stack Overflow.
 get_script_dir () {
     SOURCE="${BASH_SOURCE[0]}"
     while [ -h "$SOURCE" ]; do
