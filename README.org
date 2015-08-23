@@ -37,7 +37,10 @@ The versions of the compilers used for the benchmarks in my computer are:
 - Sequential sieve algorithm.
    - [[./benchmarks/01-sieve/raw_sieve.cpp][Raw sieve]].
    - [[./benchmarks/01-sieve/ranges_sieve.cpp][Ranges Sieve]].
-   - [[./benchmarks/01-sieve/plot-out/benchmark.png][Benchmark result]].
+
+#+CAPTION: Sieve benchmark result.
+#+NAME: fig:sieve-bench
+[[./benchmarks/01-sieve/plot-out/benchmark.png]]
 
 * Compile and run the benchmarks
 
