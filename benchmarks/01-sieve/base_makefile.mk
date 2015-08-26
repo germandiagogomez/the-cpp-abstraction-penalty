@@ -6,41 +6,34 @@ CPPFLAGS := -DNDEBUG
 CXXFLAGS := -std=c++14 -O3
 
 CPPFLAGS += -MMD -MP
-
-srcdir := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 VPATH := $(srcdir)
 
-plotdir := plot-output
 objdir := .objs
 
 MKDIR_P := mkdir -p
 SOURCES := $(notdir $(wildcard $(srcdir)/*.cpp))
 TARGETS := $(SOURCES:.cpp=)
-OBJECTS := $(foreach s,$(SOURCES:.cpp=.o),$(objdir)/$(s))
-BENCH_DATA := $(SOURCES:.cpp=.dat)
-
-ranges_sieve_INCLUDES := -I$(srcdir)/../../submodules/range-v3/include
 
 
-all: $(TARGETS)
+ranges_sieve-$(CXX)_INCLUDES := -I$(srcdir)/../../submodules/range-v3/include
 
-$(TARGETS): % : $(objdir)/%.o
+$(TARGETS): % : $(objdir)/%-$(CXX).o
 	$(CXX) $< -o $@
 
-%.dat: %
+%-${CXX}.dat: %
 	$(info Executing './$< 5' for generating benchmark file $@)
 	$(file > $@,$(shell ./$< 5))
 
-$(plotdir):
-	mkdir $@
 
-$(objdir)/%.o:%.cpp | $(objdir)
-	$(CXX) $($(basename $(notdir $@))_INCLUDES) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+$(objdir)/%-$(CXX).o:%.cpp | $(objdir)
+	$(CXX) $($(basename $(<F))-$(CXX)_INCLUDES) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 $(objdir):
 	$(MKDIR_P) $@
 
-benchmark: $(BENCH_DATA)
+
+benchmark-clang++-3.6: $(SOURCES:%.cpp=%-$(CXX).dat)
+
 
 .PHONY: all
 
