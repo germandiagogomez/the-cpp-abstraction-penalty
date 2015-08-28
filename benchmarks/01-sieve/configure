@@ -1,14 +1,1 @@
-#!/usr/bin/env sh
-
-
-LAST_DIR_COMPONENT=$(basename `pwd`)
-
-if [ -f ranges_sieve.cpp ]; then
-   echo "In-source builds not supported."
-   echo "Please create a separate directory and invoke configure from there."
-   echo "Ex. mkdir build && cd build && ../configure."
-   echo "WARNING: Only level 1 nesting subdirectory to the source tree are supported as of now."
-   exit 1
-else
-    ln -s ../Makefile.in Makefile
-fi
+make -f Makefile.in config

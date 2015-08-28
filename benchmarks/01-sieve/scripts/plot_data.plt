@@ -15,8 +15,8 @@ set yrange [0:*]
 
 set xtics ("clang" 0.15, "g++-5" 1.15)
 
-plot filename every 2 u 3 title "raw sieve", \
-     "" every 2::1 u 3 title "ranges sieve"
+plot filename every 2 u 3 title "ranges sieve", \
+     "" every 2::1 u 3 title "raw sieve"
 
       
       
