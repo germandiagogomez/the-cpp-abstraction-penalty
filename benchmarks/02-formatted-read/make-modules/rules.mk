@@ -1,10 +1,10 @@
 .SUFFIXES:
 .DELETE_ON_ERROR:
 
+BENCHMARK_SIZE = 100000
+BENCHMARK_TIMES = 5
+
 objdir := .objs
-
-BENCHMARK_TIMES := 5
-
 
 define make-suffixed-objects
 $(objdir)/%-$(1).o:%.cpp | $$(objdir)

@@ -16,7 +16,6 @@ PROGRAMS :=  $(foreach comp,$(COMPILERS),\
 
 VPATH := $(srcdir)
 
-ranges_sieve_INCLUDES := -I$(srcdir)../../submodules/range-v3/include
 
 all: plot
 
