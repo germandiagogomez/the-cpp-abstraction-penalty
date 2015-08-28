@@ -1,18 +1,16 @@
 srcdir := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 builddir := build
-
-MKDIR_P := mkdir -p
-LN_S := ln -s
-
-
 -include $(srcdir)/$(builddir)/.config
 include $(srcdir)/make-modules/rules.mk
 
 
+
+MKDIR_P := mkdir -p
+LN_S := ln -s
+
 COMPILERS := clang++-3.6 g++
 SOURCES := $(sort $(notdir $(wildcard $(srcdir)/*.cpp)))
 PROGRAMS_BASIC_NAMES := $(SOURCES:.cpp=)
-
 
 PROGRAMS :=  $(foreach comp,$(COMPILERS),\
 	$(foreach bn,$(PROGRAMS_BASIC_NAMES),$(bn)-$(comp)))
@@ -21,6 +19,7 @@ ranges_sieve_INCLUDES := -I$(srcdir)/../../submodules/range-v3/include
 VPATH := $(srcdir)
 
 
+all: plot
 
 $(builddir)/.config: | $(builddir)
 	$(file > $(builddir)/.config,include $$(srcdir)/make-modules/vars.mk)

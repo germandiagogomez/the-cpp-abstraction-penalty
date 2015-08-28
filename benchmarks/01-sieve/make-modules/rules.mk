@@ -14,8 +14,6 @@ $(1): $$(objdir)/$(1).o
 	$$(CXX) $$< -o $$@
 endef
 
-
-
 $(objdir)/%.o:%.cpp | $(objdir)
 	$(CXX) $($(basename $(<F))_INCLUDES) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
@@ -27,10 +25,4 @@ $(objdir):
 	$(info Executing './$< 5' for generating benchmark file $@)
 	$(file > $@,$(shell ./$< 5))
 
-.PHONY: all
-
 -include $(foreach dep,$(SOURCES:.cpp=.d), $(objdir)/$(dep))
-
-.PHONY: print-vars
-print-vars:
-	@$(foreach V,$(sort $(.VARIABLES)),$(if $(filter-out environment% default automatic,$(origin $V)),$(info $V=$(value $V))))
