@@ -50,17 +50,19 @@ You will need gnu plot installed in your computer for the plot output.
 If you just want the test results, you can use the =configure= script
 included in =benchmarks/01-sieve/configure= and run =make=.
 
-You will also need clang++ and g++-5.
+
 
 #+BEGIN_src sh
 git clone https://github.com/germandiagogomez/the-cpp-abstraction-penalty.git
 git submodule init
 git submodule update
 cd benchmarks/01-sieve
-scripts/make-plot.sh <plot-dir> clang++ g++-5
+./configure
+cd build
+make COMPILERS=clang++ g++ plot
 #+END_src
 
-This will output in =<plot-dir>= a plot with the median of 5 executions
+This will output a plot with the median of 5 executions
 for each binary with each compiler and will group by compiler,
 so that a comparison of raw vs library-based solution can be seen.
 
