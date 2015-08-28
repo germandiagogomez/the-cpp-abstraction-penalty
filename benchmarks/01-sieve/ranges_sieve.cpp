@@ -94,8 +94,5 @@ int main(int argc, char * argv[]) {
     }
 
     sort(begin(times), end(times));
-    for_each(begin(times), end(times),
-             [](auto v) { std::cout << v.count() << ' '; });
-
-    std::cout << argv[0] << '\n';
+    std::cout << times[times.size()/2].count() << ' ';
 }

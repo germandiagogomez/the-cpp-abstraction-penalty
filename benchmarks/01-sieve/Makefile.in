@@ -20,6 +20,8 @@ PROGRAMS :=  $(foreach comp,$(COMPILERS),\
 ranges_sieve_INCLUDES := -I$(srcdir)/../../submodules/range-v3/include
 VPATH := $(srcdir)
 
+
+
 $(builddir)/.config: | $(builddir)
 	$(file > $(builddir)/.config,include $$(srcdir)/make-modules/vars.mk)
 	@$(LN_S) $(srcdir)/Makefile.in $(builddir)/Makefile
@@ -48,9 +50,9 @@ $(foreach comp,$(COMPILERS),$(eval $(call make-benchmark,$(comp))))
 
 
 benchmark.png: $(foreach comp,$(COMPILERS), benchmark-$(comp))
-	$(foreach datfile,$(PROGRAMS:=.dat),$(file >> all-benchmarks.dat,$(shell $(CAT) $(datfile))))
-	$(GNUPLOT) -e "output_plot='benchmark.png';filename='all-benchmarks.dat'" $(srcdir)/scripts/plot_data.plt
+	$(file > all-benchmarks.dat,Compiler $(PROGRAMS_BASIC_NAMES))
+	$(foreach comp,$(COMPILERS),$(file >> all-benchmarks.dat,$(comp) $(shell $(CAT) $(addsuffix -$(comp).dat,$(PROGRAMS_BASIC_NAMES)))))
+	@$(GNUPLOT) -e "output_plot='benchmark.png';filename='all-benchmarks.dat'" $(srcdir)/scripts/plot_data.plt
+	$(info Plot $@ created)
 
-
-.PHONY:plot
 plot: benchmark.png
