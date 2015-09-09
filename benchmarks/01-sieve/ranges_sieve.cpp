@@ -12,21 +12,12 @@
 #include "range/v3/algorithm/for_each.hpp"
 #include "range/v3/range_for.hpp"
 
+#include "util/benchutil.hpp"
+
 namespace v = ranges::view;
 namespace a = ranges::action;
 namespace r = ranges;
 namespace c = std::chrono;
-
-template <class F>
-auto time_it(F && f) {
-    auto start = c::high_resolution_clock::now();
-    auto res = f();
-    auto end = c::high_resolution_clock::now();
-
-    return std::make_tuple(
-        c::duration_cast<c::milliseconds>(end - start),
-        res);
-}
 
 
 /** Sieve table for the first UpToNumber natural numbers */
@@ -80,6 +71,8 @@ sieve_table<NatNumber> execute_sieve() noexcept {
 
 int main(int argc, char * argv[]) {
     using namespace std;
+    using namespace benchmarks::util;
+
 
     int times_exe = std::stoi(argv[1]);
 

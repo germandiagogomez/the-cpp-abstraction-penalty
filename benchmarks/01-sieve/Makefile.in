@@ -16,7 +16,8 @@ PROGRAMS :=  $(foreach comp,$(COMPILERS),\
 
 VPATH := $(srcdir)
 
-ranges_sieve_INCLUDES := -I$(srcdir)../../submodules/range-v3/include
+ranges_sieve_INCLUDES := -I$(srcdir)../../submodules/range-v3/include -I$(srcdir)../
+raw_sieve_INCLUDES := -I$(srcdir)../
 
 all: plot
 
@@ -45,7 +46,6 @@ endef
 
 #Create rules benchmark-clang++-3.6, benchmark-g++, etc.
 $(foreach comp,$(COMPILERS),$(eval $(call make-benchmark,$(comp))))
-
 
 benchmark.png: $(foreach comp,$(COMPILERS), benchmark-$(comp))
 	$(file > all-benchmarks.dat,Compiler $(subst _,-,$(PROGRAMS_BASIC_NAMES)))
