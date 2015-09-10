@@ -16,6 +16,8 @@ PROGRAMS :=  $(foreach comp,$(COMPILERS),\
 
 VPATH := $(srcdir)
 
+sscanf_formatted_read_INCLUDES := -I$(srcdir)/..
+stringstream_formatted_read_INCLUDES := -I$(srcdir)/..
 
 all: plot
 

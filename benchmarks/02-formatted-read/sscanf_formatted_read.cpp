@@ -9,21 +9,12 @@
 #include <vector>
 #include <chrono>
 
+#include "util/benchutil.hpp"
+
+
 namespace s = std;
 
 namespace c = std::chrono;
-
-
-template <class F>
-auto time_it(F && f) {
-    auto start = c::high_resolution_clock::now();
-    auto res = f();
-    auto end = c::high_resolution_clock::now();
-
-    return std::make_tuple(
-                           c::duration_cast<c::milliseconds>(end - start),
-                           res);
-}
 
 
 int generate_int() {
@@ -70,6 +61,7 @@ int read_numbers(s::string const & data) {
 
 int main(int argc, char * argv[]) {
     using namespace std;
+    using namespace benchmarks::util;
     int times_exe = std::stoi(argv[1]);
     int num_of_ints = std::stoi(argv[2]);
 
