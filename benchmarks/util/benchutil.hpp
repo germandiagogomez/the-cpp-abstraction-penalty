@@ -1,5 +1,6 @@
-#ifndef UTILS_BENCHUTIL_HPP_
-#define UTILS_BENCHUTIL_HPP_
+#ifndef BENCHMARKS_UTIL_BENCHUTIL_HPP_
+#define BENCHMARKS_UTIL_BENCHUTIL_HPP_
+
 
 #include <chrono>
 #include <tuple>
