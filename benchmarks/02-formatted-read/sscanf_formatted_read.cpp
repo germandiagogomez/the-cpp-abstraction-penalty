@@ -10,38 +10,14 @@
 #include <chrono>
 
 #include "util/benchutil.hpp"
+#include "util/random_generate.hpp"
 
 
 namespace s = std;
 
 namespace c = std::chrono;
 
-
-int generate_int() {
-    static s::random_device rd;
-    static s::mt19937 mt(rd());
-    static s::uniform_int_distribution<int> dist(
-        s::numeric_limits<int>::min(),
-        s::numeric_limits<int>::max());
-
-    return dist(mt);
-}
-
-
-auto generate_ints(int n) {
-    s::vector<s::string> numbers(n);
-
-    s::generate(s::begin(numbers),
-                s::end(numbers),
-                [] { return s::to_string(generate_int()); });
-
-    s::string result;
-    for (auto const & s : numbers) {
-        result += s;
-        result += ' ';
-    }
-    return result;
-}
+using benchmarks::util::generate_ints;
 
 
 int read_numbers(s::string const & data) {
