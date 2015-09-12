@@ -1,15 +1,15 @@
 srcdir := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
-builddir := build
--include $(srcdir)/$(builddir)/.config
-include $(srcdir)/make-modules/rules.mk
+builddir := $(srcdir)/build/
+-include $(builddir)/.config
+include $(srcdir)/../make-modules/rules.mk
 
 
 MKDIR_P := mkdir -p
 LN_S := ln -s
 
 COMPILERS := clang++ g++
-SOURCES := $(sort $(notdir $(wildcard $(srcdir)/*.cpp)))
-PROGRAMS_BASIC_NAMES := $(SOURCES:.cpp=)
+SOURCES := $(sort $(wildcard $(srcdir)*.cpp))
+PROGRAMS_BASIC_NAMES := $(notdir $(SOURCES:.cpp=))
 
 PROGRAMS :=  $(foreach comp,$(COMPILERS),\
 	$(foreach bn,$(PROGRAMS_BASIC_NAMES),$(bn)-$(comp)))
@@ -22,7 +22,7 @@ raw_sieve_INCLUDES := -I$(srcdir)../
 all: plot
 
 $(builddir)/.config: | $(builddir)
-	$(file > $(builddir)/.config,include $$(srcdir)/make-modules/vars.mk)
+	$(file > $(builddir)/.config,include $$(srcdir)/../make-modules/vars.mk)
 	@$(LN_S) $(srcdir)/Makefile.in $(builddir)/Makefile
 	$(info Created $(builddir) and config file $(builddir)/.config)
 
@@ -40,17 +40,21 @@ $(foreach comp,$(COMPILERS),$(eval $(call make-suffixed-objects,$(comp))))
 
 
 define make-benchmark
-benchmark-$(1): CXX = $(1)
-benchmark-$(1): $$(foreach basic-name,$$(PROGRAMS_BASIC_NAMES),$$(basic-name)-$(1).dat)
+$(builddir)/benchmark-$(1): CXX = $(1)
+$(builddir)/benchmark-$(1): $$(foreach basic-name,$$(PROGRAMS_BASIC_NAMES),$$(basic-name)-$(1).dat)
 endef
 
 #Create rules benchmark-clang++-3.6, benchmark-g++, etc.
 $(foreach comp,$(COMPILERS),$(eval $(call make-benchmark,$(comp))))
 
-benchmark.png: $(foreach comp,$(COMPILERS), benchmark-$(comp))
-	$(file > all-benchmarks.dat,Compiler $(subst _,-,$(PROGRAMS_BASIC_NAMES)))
-	$(foreach comp,$(COMPILERS),$(file >> all-benchmarks.dat,$(comp) $(shell $(CAT) $(addsuffix -$(comp).dat,$(PROGRAMS_BASIC_NAMES)))))
-	@$(GNUPLOT) -e "output_plot='benchmark.png';filename='all-benchmarks.dat'" $(srcdir)/scripts/plot_data.plt
+$(builddir)/benchmark.png: $(foreach comp,$(COMPILERS), $(builddir)/benchmark-$(comp))
+	$(file > $(builddir)/all-benchmarks.dat,Compiler $(subst _,-,$(PROGRAMS_BASIC_NAMES)))
+	$(foreach comp,$(COMPILERS),$(file >> $(builddir)/all-benchmarks.dat,$(comp) $(shell $(CAT) $(addsuffix -$(comp).dat,$(PROGRAMS_BASIC_NAMES)))))
+	@gnuplot -e "output_plot='$(builddir)/benchmark.png';filename='$(builddir)/all-benchmarks.dat'" $(srcdir)/scripts/plot_data.plt
 	$(info Plot $@ created)
 
-plot: benchmark.png
+plot: $(builddir)/benchmark.png
+
+vars:
+	@echo $(SOURCES)
+	@echo $(PROGRAMS_BASIC_NAMES)

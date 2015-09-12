@@ -1,14 +1,16 @@
 .SUFFIXES:
 .DELETE_ON_ERROR:
 
+
 objdir := .objs
+
 
 BENCHMARK_TIMES := 5
 
 
 define make-suffixed-objects
 $(objdir)/%-$(1).o:%.cpp | $$(objdir)
-	$$(CXX) $$($$(basename $$(<F))_INCLUDES) $$(CPPFLAGS) $$(CXXFLAGS) -c $$< -o $$@
+	$$(CXX) -std=c++14 $$($$(basename $$(<F))_INCLUDES) $$(CPPFLAGS) $$(CXXFLAGS) -c $$< -o $$@
 endef
 
 
@@ -18,7 +20,7 @@ $(1): $$(objdir)/$(1).o
 endef
 
 $(objdir)/%.o:%.cpp | $(objdir)
-	$(CXX) $($(basename $(<F))_INCLUDES) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CXX) -std=c++14 $($(basename $(<F))_INCLUDES) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 
 $(objdir):

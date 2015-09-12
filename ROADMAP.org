@@ -1,4 +1,8 @@
-** TODO [#A] Move separate Makefile.in and make-modules to one place and reuse in all benchs.
-** TODO [#A] Add parameters for benchmark size and repetitions from Make invocation.
+** DONE [#A] Move separate Makefile.in and make-modules to one place and reuse in all benchs.
+   CLOSED: [2015-09-12 Sat 12:31]
 ** TODO [#A] Add target so that benchmark plots are automatically shown in github README.org.
+** DONE [#A] Add parameters for benchmark size and repetitions from Make invocation.
+   CLOSED: [2015-09-12 Sat 12:31]
 ** TODO [#A] Make easy to contribute benchmarks through script.
+*** TODO Create a single generic makefile for any benchmark so that users can start with that.
+** TODO Pass COMPILERS variable when invoking recursive make
