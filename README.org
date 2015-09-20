@@ -1,15 +1,28 @@
 * Purpose
 
 This is a set of benchmarks in C++ that tries
-to compare "raw implementation" vs "library-based"
-implementations of some algorithms and compare their speeds.
+to compare "raw/C-ish code" implementations vs
+"library-based, modern C++"
+implementations of some algorithms and compares
+their speeds.
 
-So for every benchmark two implementations are included:
-a raw one and a library-based, idiomatic one.
+
+For every benchmark,
+two implementations are introduced:
+
+- raw implementation.
+- C++ modern implementation.
+
+raw and C++. The goal is to put them front to front
+to see how they perform against each other,
+on a per-compiler basis.
+
+Plots are generated, grouping, per-compiler,
+the two versions put front to front.
 
 
 I am particularly interested in measuring the abstraction
-penalty incurred by the use of a library vs plain approaches
+penalty incurred by the use of a C++ vs C-ish plain approaches
 *when compiling programs with optimization*, since one
 of the goals of C++ is to the zero-overhead principle.
 
@@ -44,27 +57,34 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 * Compile and run the benchmarks
 
-If you want to run the benchmark yourself in your computer (Linux or Mac).
+So you want to run the benchmark yourself in your computer...
 
-You will need gnu plot installed in your computer for the plot output.
-If you just want the test results, you can use the =configure= script
-included in =benchmarks/01-sieve/configure= and run =make=.
+You will need gnuplot installed in your computer for the plot output.
+
+
+NOTE: Support for Visual C++ benchmark execution is planned to be supported,
+though, I cannot give a date for this. As of now only Unix-like systems
+are supported, since my solution uses handmade makefiles.
+
 
 #+BEGIN_src sh
 git clone https://github.com/germandiagogomez/the-cpp-abstraction-penalty.git
 git submodule init
 git submodule update
-cd benchmarks/01-sieve
 ./configure
 cd build
-make COMPILERS=clang++ g++ plot
+make COMPILERS="clang++ g++"
 #+END_src
 
-This will output a plot file benchmark.png with the median of 5 executions
-for each binary with each compiler and will group by compiler,
-so that a comparison of raw vs library-based solution can be seen in a
-per-compiler basis.
+This will:
 
-*WARNING*: I just tested the plot output using the setup above.
-Modifications should be easy to further generalize this infraestructure.
-I plan to do it.
+- Build the binaries for your compilers.
+- Run the binaries for benchmarking
+- Create a plots directory and put the benchmarks .png files there,
+names benchmark-1.png for 1st benchmark, benchmark-2.png for 2nd benchmark,
+etc.
+
+The benchmarks shown the execution time comparison, on a per-compiler basis,
+of
+
+*WARNING*: Only tested on my Mac OSX computer.

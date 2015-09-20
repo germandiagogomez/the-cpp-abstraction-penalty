@@ -1,3 +1,5 @@
+.DELETE_ON_ERROR:
+
 srcdir := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 builddir := $(srcdir)/build
 
@@ -5,7 +7,7 @@ BENCHMARKS_DIR := $(srcdir)/benchmarks/
 SUBDIRS := $(BENCHMARKS_DIR)01-sieve/ $(BENCHMARKS_DIR)02-formatted-read/
 BUILD_DIRS := $(BENCHMARKS_DIR)01-sieve/build $(BENCHMARKS_DIR)02-formatted-read/build
 
-COMPILERS := clang++ g++
+export COMPILERS := clang++ g++
 
 LN_S := ln -s
 MKDIR_P := mkdir -p
@@ -13,7 +15,7 @@ CP := cp
 
 .PHONY: all
 all: | $(srcdir)/plots
-	@for dir in $(BUILD_DIRS); do $(MAKE) $(MAKEFLAGS) -C $${dir}; done; \
+	@for dir in $(BUILD_DIRS); do $(MAKE) -C $${dir} COMPILERS="$(COMPILERS)"; done;
 	i=1; \
 	for dir in $(BUILD_DIRS); do $(CP) $${dir}/benchmark.png $(srcdir)/plots/benchmark-$${i}.png; i=$$(($$i+1)); done
 
@@ -22,7 +24,7 @@ $(srcdir)/plots:
 	$(MKDIR_P) $@
 
 
-.DELETE_ON_ERROR:
+
 
 $(builddir)/.config: | $(builddir)
 	@for dir in $(SUBDIRS); do cd $${dir} && ./configure && cd $${OLDPWD}; done
