@@ -30,6 +30,33 @@ of the goals of C++ is to the zero-overhead principle.
 My first experiment makes use of [[https://github.com/ericniebler/range-v3][Eric Niebler's ranges library]].
 There is a standard C++ proposal for inclusion based on this work.
 
+* A note about the benchmarks
+
+The scope of this benchmark set is very targeted:
+I want to show how typical, older-style or C-ish code
+looks against idiomatic C++ code and how it performs.
+
+There are plans to improve the information provided,
+besides timing, about code safety and more in the
+future, but that will need to wait for now.
+
+I want to limit the benchmarks to code that is easy to
+write for the average programmer, things that would be
+likely to be written in the wild, that look simple.
+
+For example, if there is an I/O benchmark of C I/O vs C++ I/O,
+I consider cheating to start to mess up with buffers and locales
+and advanced tricks to improve performance.
+
+This is not what a normal programmer would
+write as a first attemp.
+
+I plan to accept contributions, but for that, first,
+I am making as easy as possible to contribute a benchmark.
+
+* Contributing a new benchmark
+
+TODO
 
 * Compile and run the benchmarks
 
