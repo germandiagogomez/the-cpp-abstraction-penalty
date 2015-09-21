@@ -13,7 +13,7 @@ two implementations are introduced:
 - raw implementation.
 - C++ modern implementation.
 
-raw and C++. The goal is to put them front to front
+The goal is to put them front to front
 to see how they perform against each other,
 on a per-compiler basis.
 
@@ -30,7 +30,40 @@ of the goals of C++ is to the zero-overhead principle.
 My first experiment makes use of [[https://github.com/ericniebler/range-v3][Eric Niebler's ranges library]].
 There is a standard C++ proposal for inclusion based on this work.
 
-* Benchmarks
+
+* Compile and run the benchmarks
+
+So you want to run the benchmark yourself in your computer...
+
+Prerequisites:
+
+- gnuplot.
+- compilers to run the benchmarks against (only tested g++ and clang++ in OS X at this time).
+
+NOTE: Support for Visual C++ benchmark execution is planned to be supported,
+though, I cannot give a date for this. As of now only Unix-like systems
+are supported, since my solution uses handmade makefiles.
+
+#+BEGIN_src sh
+git clone https://github.com/germandiagogomez/the-cpp-abstraction-penalty.git
+git submodule init
+git submodule update
+./configure
+cd build
+make COMPILERS="clang++ g++"
+#+END_src
+
+This will:
+
+- Build the binaries for your compilers.
+- Run the binaries for benchmarking
+- Create a `plots` directory at the root and put the benchmarks .png files there,
+  names benchmark-1.png for 1st benchmark, benchmark-2.png for 2nd benchmark,
+  etc.
+
+
+*WARNING*: Only tested on my Mac OSX computer.
+* Benchmarks results
 
 ** Hardware information
 
@@ -54,37 +87,3 @@ The versions of the compilers used for the benchmarks in my computer are:
 #+CAPTION: Sieve benchmark result.
 #+NAME: fig:sieve-bench
 [[./benchmarks/01-sieve/plot-out/benchmark.png]]
-
-* Compile and run the benchmarks
-
-So you want to run the benchmark yourself in your computer...
-
-You will need gnuplot installed in your computer for the plot output.
-
-
-NOTE: Support for Visual C++ benchmark execution is planned to be supported,
-though, I cannot give a date for this. As of now only Unix-like systems
-are supported, since my solution uses handmade makefiles.
-
-
-#+BEGIN_src sh
-git clone https://github.com/germandiagogomez/the-cpp-abstraction-penalty.git
-git submodule init
-git submodule update
-./configure
-cd build
-make COMPILERS="clang++ g++"
-#+END_src
-
-This will:
-
-- Build the binaries for your compilers.
-- Run the binaries for benchmarking
-- Create a plots directory and put the benchmarks .png files there,
-names benchmark-1.png for 1st benchmark, benchmark-2.png for 2nd benchmark,
-etc.
-
-The benchmarks shown the execution time comparison, on a per-compiler basis,
-of
-
-*WARNING*: Only tested on my Mac OSX computer.
