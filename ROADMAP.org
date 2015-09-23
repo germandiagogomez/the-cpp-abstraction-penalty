@@ -5,4 +5,5 @@
    CLOSED: [2015-09-12 Sat 12:31]
 ** TODO [#A] Make easy to contribute benchmarks through script.
 *** TODO Create a single generic makefile for any benchmark so that users can start with that.
-** TODO Pass COMPILERS variable when invoking recursive make
+** DONE Pass COMPILERS variable when invoking recursive make
+   CLOSED: [2015-09-21 Mon 01:06]
