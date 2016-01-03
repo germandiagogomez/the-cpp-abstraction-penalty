@@ -171,6 +171,11 @@ The versions of the compilers used for the benchmarks in my computer are:
 [[./plots/01-sieve.png]]
 
 
+- Formatted read.
+   - [[./benchmarks/02-formatted_read/sscanf_formatted_read.cpp][Sscanf read]].
+   - [[./benchmarks/02-formatted_read/stringstream_formatted_read.cpp][String stream read]].
+
+
 #+CAPTION: Formatted read benchmark result.
 #+NAME: fig:formatted_read-bench
 [[./plots/02-formatted_read.png]]
