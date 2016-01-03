@@ -1,17 +1,16 @@
 * Purpose
 
 This is a set of benchmarks in C++ that tries
-to compare "raw/C-ish code" implementations vs
-"library-based, modern C++"
+to compare "raw/C-ish code" or old C++ style 
+implementations vs "library-based, modern C++"
 implementations of some algorithms and compares
-their speeds.
-
+their execution time.
 
 For every benchmark,
 two implementations are introduced:
 
 - raw implementation.
-- C++ modern implementation.
+- Modern C++ implementation.
 
 The goal is to put them front to front
 to see how they perform against each other,
@@ -24,21 +23,18 @@ the two versions put front to front.
 I am particularly interested in measuring the abstraction
 penalty incurred by the use of a C++ vs C-ish plain approaches
 *when compiling programs with optimization*, since one
-of the goals of C++ is to the zero-overhead principle.
+of the goals of C++ is the zero-overhead principle.
 
 
 My first experiment makes use of [[https://github.com/ericniebler/range-v3][Eric Niebler's ranges library]].
 There is a standard C++ proposal for inclusion based on this work.
 
-* A note about the benchmarks
+* Benchmark style and guidelines
 
 The scope of this benchmark set is very targeted:
 I want to show how typical, older-style or C-ish code
-looks against idiomatic C++ code and how it performs.
-
-There are plans to improve the information provided,
-besides timing, about code safety and more in the
-future, but that will need to wait for now.
+or old-style C++ code
+performs against idiomatic modern C++ code.
 
 I want to limit the benchmarks to code that is easy to
 write for the average programmer, things that would be
@@ -50,14 +46,10 @@ I consider cheating to start to mess up with buffers and locales
 and advanced tricks to improve performance, because
 this is not what a normal programmer would write as a first attemp.
 
-I plan to accept contributions, but for that, first,
-I am making as easy as possible to contribute a benchmark.
-I will reserve the right to accept or reject a benchmark
-to the set of benchmarks, with the hope of keeping it focused.
-
-* Contributing a new benchmark
-
-TODO
+Contributions will be accepted.
+Suggestions and ideas for new benchmarks are welcome as well.
+I will reserve for myself the right to accept or reject a benchmark
+to the set of benchmarks, with the hope of keeping it focused. :). 
 
 * Compile and run the benchmarks
 
@@ -65,32 +57,91 @@ So you want to run the benchmark yourself in your computer...
 
 Prerequisites:
 
+- python 3 (though currently cmake is looking for python 2!).
 - gnuplot.
 - compilers to run the benchmarks against (only tested g++ and clang++ in OS X at this time).
 
-NOTE: Support for Visual C++ benchmark execution is planned,
-though, I cannot give a date for this. As of now only Unix-like systems
-are supported, since my solution uses handmade makefiles.
+NOTE: Not tested in Visual Studio compiler yet, but it should work.
 
 #+BEGIN_src sh
 git clone https://github.com/germandiagogomez/the-cpp-abstraction-penalty.git
+cd the-cpp-abstraction-penalty
 git submodule init
 git submodule update
-./configure
-cd build
-make COMPILERS="clang++ g++"
+
+#Example ./build-all-benchmarks.py clang++ g++
+./build-all-benchmarks.py [compiler-exes]
 #+END_src
 
 This will:
 
 1. Build the binaries for your compilers.
-2. Run the binaries for benchmarking
-3. Create a `plots` directory at the root and put the benchmarks .png files there,
-  names benchmark-1.png for 1st benchmark, benchmark-2.png for 2nd benchmark,
-  etc.
-
+2. Run the binaries for the benchmark.
+3. Put, for each benchmark, a png file in
+build-all directory that you can merrily open when done to
+see the chart.
 
 *WARNING*: Only tested on my Mac OSX computer.
+
+* How to contribute a new benchmark.
+
+Your benchmark must return the number of milliseconds that
+took for it to execute as an integer number. The provided
+benchmarks return the median of 5 executions, so
+for now I recomend to just do this. There is a utility file
+in =${TCPPAP_BENCHMARKS_DIR}/util= that you can
+use for timing.
+
+
+NOTE: Maybe I will take a more scientific look at how to achieve 
+more accurate results in the future, but this will suffice
+for now.
+
+** Getting your benchmark to work.
+
+1. Create a directory for your benchmark in
+=benchmarks/your-benchmark-directory=.
+2. Use a template like the one below for your CMakeLists.txt in
+the newly created directory:
+
+#+BEGIN_src 
+if (UNIX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
+endif()
+
+set(TCPPAP_BENCHMARK_NAME my-benchmark-name)
+set(TCPPAP_OLD_STYLE_SOURCES my_file1.cpp ...)
+set(TCPPAP_MODERNCPP_STYLE_SOURCES my_modern_file1.cpp ...)
+
+include(MakeBenchmark)		 
+#+END_src
+
+3. (For now) Take a look at the provided main function examples 
+for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
+
+4. Create a branch for working on your benchmark.
+
+5. When done, just send a pull request. I will try to take
+a look, mainly at weekends due to my workload. :)
+
+** Variables reference.
+|-----------------------+-----------------------------------------------------------|
+| Read-only variable    | Meaning                                                   |
+|-----------------------+-----------------------------------------------------------|
+| TCPPAP_BENCHMARKS_DIR | Directory where benchmarks hang from.                     |
+| TCPPAP_MODULES_DIR    | Submodules directory for any dependencies for benchmarks. |
+|-----------------------+-----------------------------------------------------------|
+
+|---------------------------------+--------------------------------------------------------------------------|
+| User variable                   |                                                                          |
+|---------------------------------+--------------------------------------------------------------------------|
+| TCPPAP_MODERNCPP_STYLE_SOURCES  | Source files for modern benchmark executable.                            |
+| TCPPAP_MODERNCPP_STYLE_INCLUDES | Use for include directories for only modern style benchmark exe.         |
+| TCPPAP_OLD_STYLE_SOURCES        | Source files for old benchmark executable.                               |
+| TCPPAP_OLD_STYLE_INCLUDES       | Use for include directories for only old style benchmark exe.            |
+| TCPPAP_INCLUDES                 | Use for include directories for both modern and old style benchmark exe. |
+|---------------------------------+--------------------------------------------------------------------------|
+
 * Benchmarks results
 
 ** Hardware information
@@ -109,7 +160,7 @@ The versions of the compilers used for the benchmarks in my computer are:
 ** Results
 
 
-@BENCHMARKS_LIST@
+
 - Sequential sieve algorithm.
    - [[./benchmarks/01-sieve/raw_sieve.cpp][Raw sieve]].
    - [[./benchmarks/01-sieve/ranges_sieve.cpp][Ranges Sieve]].
@@ -117,4 +168,9 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 #+CAPTION: Sieve benchmark result.
 #+NAME: fig:sieve-bench
-[[./plots/benchmark-1.png]]
+[[./plots/01-sieve.png]]
+
+
+#+CAPTION: Formatted read benchmark result.
+#+NAME: fig:formatted_read-bench
+[[./plots/02-formatted_read.png]]

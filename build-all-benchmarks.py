@@ -4,13 +4,16 @@ import functools
 import itertools as it
 import os.path as op
 import os
+import shutil
 import glob
 import sys
 import collections as col
 
 COMPILERS = ('clang++', 'g++')
 ROOT_BUILD_DIR = 'build-all'
-PLOT_FILE = 'scripts/plot_data.plt'
+PLOT_FILE_TEMPLATE = 'scripts/plot_data.plt'
+BENCHMARKS_DIR = 'benchmarks'
+PLOTS_DIR = 'plots'
 
 
 def create_directories_for_compilers(compilers):
@@ -68,20 +71,34 @@ def generate_plot(benchmark_name):
     gnuplot -e "output_plot='{output_plot}';filename='{benchmark_file}'" {plot_file}
     '''.format(benchmark_file=benchmark_file,
                output_plot=output_plot,
-               plot_file=PLOT_FILE)
+               plot_file=PLOT_FILE_TEMPLATE)
                
     sp.run(plot_command, shell=True)
 
-    
+def generate_plots(root_dir):
+    for benchmark_name in os.listdir(root_dir):
+        if benchmark_name[0] >= '0' and \
+           benchmark_name[0] <= '9':
+            generate_plot(benchmark_name)
+            
+
+def copy_plots(plots_source_dir, plots_dest_dir):
+    for f in os.listdir(plots_source_dir):
+        if f[0].isdigit() and \
+           f.endswith('.png'):
+            shutil.copyfile(op.join(plots_source_dir, f),
+                            op.join(plots_dest_dir, f))
+            
+
+#TODO: A decent command line
 if __name__ == '__main__':
     if len(sys.argv) != 1:
         COMPILERS = sys.argv[1:]
         
     create_directories_for_compilers(COMPILERS)
     run_benchmarks_for_compilers(COMPILERS)
-    generate_benchmark_files(COMPILERS)
-    generate_plot('01-sieve')
-    generate_plot('02-formatted_read')
 
-    
+    generate_benchmark_files(COMPILERS)
+    generate_plots(BENCHMARKS_DIR)
+    #copy_plots('build-all', PLOTS_DIR)
         
