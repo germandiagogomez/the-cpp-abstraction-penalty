@@ -1,42 +1,17 @@
-cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
-
-project(01-sieve)
-
 if (UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
 endif()
 
-set(CMAKE_BUILD_TYPE Release)
 
-set(OLD_STYLE_EXE ${PROJECT_NAME}-old-style-${TCPPAP_CXX_COMPILER_ID})
-set(MODERNCPP_STYLE_EXE ${PROJECT_NAME}-moderncpp-${TCPPAP_CXX_COMPILER_ID})
+set(TCPPAP_BENCHMARK_NAME 01-sieve)
+set(TCPPAP_OLD_STYLE_SOURCES raw_sieve.cpp)
+set(TCPPAP_MODERNCPP_STYLE_SOURCES ranges_sieve.cpp)
 
+set(TCPPAP_MODERNCPP_STYLE_INCLUDES ${TCPPAP_MODULES_DIR}/range-v3/include)
 
-add_executable(${MODERNCPP_STYLE_EXE} ranges_sieve.cpp)
-
-target_include_directories(
-  ${MODERNCPP_STYLE_EXE}
-  PRIVATE ${PROJECT_SOURCE_DIR}/../../submodules/range-v3/include ${PROJECT_SOURCE_DIR}/..)
-
-add_executable(${OLD_STYLE_EXE} raw_sieve.cpp)
-
-target_include_directories(
-  ${OLD_STYLE_EXE}
-  PRIVATE
-  ${PROJECT_SOURCE_DIR}/..)
+set(TCPPAP_INCLUDES ${TCPPAP_BENCHMARKS_DIR}/)
+set(TCPPAP_PROGRAM_ARGS 5)
 
 
-add_custom_command(TARGET ${MODERNCPP_STYLE_EXE}
-  POST_BUILD
-  COMMAND cmake -E remove -f ${MODERNCPP_STYLE_EXE}.dat
-  COMMAND ${MODERNCPP_STYLE_EXE} 5 >> ${CMAKE_BINARY_DIR}/${MODERNCPP_STYLE_EXE}.dat
-  COMMENT "Executing ${MODERNCPP_STYLE_EXE} 5"
-  VERBATIM)
-
-add_custom_command(TARGET ${OLD_STYLE_EXE}
-  POST_BUILD
-  COMMAND cmake -E remove -f ${OLD_STYLE_EXE}.dat
-  COMMAND ${OLD_STYLE_EXE} 5 >> ${CMAKE_BINARY_DIR}/${OLD_STYLE_EXE}.dat
-  COMMENT "Executing ${OLD_STYLE_EXE} 5")
-		 
+include(MakeBenchmark)		 
 
