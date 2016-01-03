@@ -99,9 +99,9 @@ for now.
 
 ** Getting your benchmark to work.
 
-1. Create a directory for your benchmark in
+- Create a directory for your benchmark in
 =benchmarks/your-benchmark-directory=.
-2. Use a template like the one below for your CMakeLists.txt in
+- Use a template like the one below for your CMakeLists.txt in
 the newly created directory:
 
 #+BEGIN_src 
@@ -116,12 +116,12 @@ set(TCPPAP_MODERNCPP_STYLE_SOURCES my_modern_file1.cpp ...)
 include(MakeBenchmark)		 
 #+END_src
 
-3. (For now) Take a look at the provided main function examples 
+- (For now) Take a look at the provided main function examples 
 for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
 
-4. Create a branch for working on your benchmark.
+- Create a branch for working on your benchmark.
 
-5. When done, just send a pull request. I will try to take
+- When done, just send a pull request. I will try to take
 a look, mainly at weekends due to my workload. :)
 
 ** Variables reference.
@@ -132,8 +132,9 @@ a look, mainly at weekends due to my workload. :)
 | TCPPAP_MODULES_DIR    | Submodules directory for any dependencies for benchmarks. |
 |-----------------------+-----------------------------------------------------------|
 
+
 |---------------------------------+--------------------------------------------------------------------------|
-| User variable                   |                                                                          |
+| User variable                   | Meaning                                                                  |
 |---------------------------------+--------------------------------------------------------------------------|
 | TCPPAP_MODERNCPP_STYLE_SOURCES  | Source files for modern benchmark executable.                            |
 | TCPPAP_MODERNCPP_STYLE_INCLUDES | Use for include directories for only modern style benchmark exe.         |
@@ -158,7 +159,6 @@ The versions of the compilers used for the benchmarks in my computer are:
      Thread model: posix.
 
 ** Results
-
 
 
 - Sequential sieve algorithm.
