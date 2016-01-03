@@ -4,7 +4,11 @@ project(the-cpp-abstraction-penalty)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 
-set(BENCHMARK_NAMES 01-sieve)
+set(BENCHMARK_NAMES
+  01-sieve
+  02-formatted_read)
+
+
 set(BENCHMARKS_DIR benchmarks)
 
 find_package(PythonInterp REQUIRED)
