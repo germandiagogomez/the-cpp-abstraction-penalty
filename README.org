@@ -103,19 +103,19 @@ for now.
 2. Use a template like the one below for your CMakeLists.txt in
 the newly created directory:
 
-#+BEGIN_src 
-if (UNIX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
-endif()
+   #+BEGIN_src 
+   if (UNIX)
+     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
+   endif()
 
-set(TCPPAP_BENCHMARK_NAME my-benchmark-name)
-set(TCPPAP_OLD_STYLE_SOURCES my_file1.cpp ...)
-set(TCPPAP_MODERNCPP_STYLE_SOURCES my_modern_file1.cpp ...)
+   set(TCPPAP_BENCHMARK_NAME my-benchmark-name)
+   set(TCPPAP_OLD_STYLE_SOURCES my_file1.cpp ...)
+   set(TCPPAP_MODERNCPP_STYLE_SOURCES my_modern_file1.cpp ...)
 
-include(MakeBenchmark)		 
-#+END_src
+   include(MakeBenchmark)		 
+   #+END_src
 
-[@3]. (For now) Take a look at the provided main function examples for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
+3. (For now) Take a look at the provided main function examples for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
 4. Create a branch for working on your benchmark.
 5. When done, just send a pull request. I will try to take a look, mainly at weekends due to my workload. :)
 
