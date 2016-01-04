@@ -57,8 +57,9 @@ So you want to run the benchmark yourself in your computer...
 
 Prerequisites:
 
-- python 3 (though currently cmake is looking for python 2!).
-- gnuplot.
+- [[https://cmake.org/download/][CMake]].
+- [[https://www.python.org/downloads/][Python 3]].
+- [[http://www.gnuplot.info/download.html][GNUPlot]].
 - compilers to run the benchmarks against (only tested g++ and clang++ in OS X at this time).
 
 NOTE: Not tested in Visual Studio compiler yet, but it should work.
@@ -77,9 +78,8 @@ This will:
 
 1. Build the binaries for your compilers.
 2. Run the binaries for the benchmark.
-3. Put, for each benchmark, a png file in
-build-all directory that you can merrily open when done to
-see the chart.
+3. Put, for each benchmark, a png file in build-all directory that you can merrily open when done to see the chart.
+
 
 *WARNING*: Only tested on my Mac OSX computer.
 
@@ -99,9 +99,9 @@ for now.
 
 ** Getting your benchmark to work.
 
-- Create a directory for your benchmark in
+1. Create a directory for your benchmark in
 =benchmarks/your-benchmark-directory=.
-- Use a template like the one below for your CMakeLists.txt in
+2. Use a template like the one below for your CMakeLists.txt in
 the newly created directory:
 
 #+BEGIN_src 
@@ -116,13 +116,11 @@ set(TCPPAP_MODERNCPP_STYLE_SOURCES my_modern_file1.cpp ...)
 include(MakeBenchmark)		 
 #+END_src
 
-- (For now) Take a look at the provided main function examples 
-for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
+@3. (For now) Take a look at the provided main function examples for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
 
-- Create a branch for working on your benchmark.
+@4. Create a branch for working on your benchmark.
 
-- When done, just send a pull request. I will try to take
-a look, mainly at weekends due to my workload. :)
+@5. When done, just send a pull request. I will try to take a look, mainly at weekends due to my workload. :)
 
 ** Variables reference.
 |-----------------------+-----------------------------------------------------------|
