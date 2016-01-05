@@ -27,10 +27,10 @@ def run_benchmarks_for_compilers(compilers):
     for compiler in compilers:
         build_dir = op.join(ROOT_BUILD_DIR, 'build-{}'.format(compiler))
         os.chdir(build_dir)
-        sp.run(['cmake', '-DCMAKE_CXX_COMPILER={}'.format(compiler),
+        sp.call(['cmake', '-DCMAKE_CXX_COMPILER={}'.format(compiler),
                 '-DTCPPAP_CXX_COMPILER_ID={}'.format(compiler),
                 '../..'])
-        sp.run(['make', '-j5'])
+        sp.call(['make', '-j5'])
         os.chdir(old_working_dir)
 
 
@@ -73,7 +73,7 @@ def generate_plot(benchmark_name):
                output_plot=output_plot,
                plot_file=PLOT_FILE_TEMPLATE)
                
-    sp.run(plot_command, shell=True)
+    sp.call(plot_command, shell=True)
 
 def generate_plots(root_dir):
     for benchmark_name in os.listdir(root_dir):

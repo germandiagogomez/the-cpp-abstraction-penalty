@@ -9,4 +9,4 @@ set(TCPPAP_INCLUDES ${TCPPAP_BENCHMARKS_DIR}/)
 
 set(TCPPAP_PROGRAM_ARGS 5 100000)
 
-include(MakeBenchMark)
+include(MakeBenchmark)

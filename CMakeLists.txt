@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
 
 project(the-cpp-abstraction-penalty)
-set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 
 include(SubdirList)
 
