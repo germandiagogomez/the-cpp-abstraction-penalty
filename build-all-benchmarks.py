@@ -14,18 +14,22 @@ ROOT_BUILD_DIR = 'build-all'
 PLOT_FILE_TEMPLATE = 'scripts/plot_data.plt'
 BENCHMARKS_DIR = 'benchmarks'
 PLOTS_DIR = 'plots'
+FIELDS_SEP = '--'
+
+def get_build_dir(compiler):
+    return FIELDS_SEP.join(['build', compiler])
 
 
 def create_directories_for_compilers(compilers):
     for compiler in compilers:
-        build_dir = op.join(ROOT_BUILD_DIR, 'build-{}'.format(compiler))
+        build_dir = op.join(ROOT_BUILD_DIR, get_build_dir(compiler))
         os.makedirs(build_dir)
 
 
 def run_benchmarks_for_compilers(compilers):
     old_working_dir = os.getcwd()
     for compiler in compilers:
-        build_dir = op.join(ROOT_BUILD_DIR, 'build-{}'.format(compiler))
+        build_dir = op.join(ROOT_BUILD_DIR, get_build_dir(compiler))
         os.chdir(build_dir)
         sp.call(['cmake', '-DCMAKE_CXX_COMPILER={}'.format(compiler),
                 '-DTCPPAP_CXX_COMPILER_ID={}'.format(compiler),
@@ -35,26 +39,26 @@ def run_benchmarks_for_compilers(compilers):
 
 
 def generate_benchmark_files(compilers):
-    all_compilers_dirs = (op.join(ROOT_BUILD_DIR, 'build-{}'.format(compiler))
+    all_compilers_dirs = (op.join(ROOT_BUILD_DIR, get_build_dir(compiler))
                                   for compiler in compilers)
     all_dat_files = functools.reduce(it.chain,
                     (glob.iglob(op.join(files_dir, '*.dat')) for
                     files_dir in all_compilers_dirs))
 
     all_dat_files_sorted = sorted(all_dat_files,
-                                  key=lambda k: '-'.join(op.basename(k).split('-')[0:2]))
-    
+                                  key=lambda k: FIELDS_SEP.join(op.basename(k).split(FIELDS_SEP)[0:1]))
+
     dat_files_per_benchmark = it.groupby(all_dat_files_sorted,
-                                         lambda k: '-'.join(op.basename(k).split('-')[0:2]))
+                                         lambda k: FIELDS_SEP.join(op.basename(k).split(FIELDS_SEP)[0:1]))
 
     for benchmark_name, bench_files in dat_files_per_benchmark:
-        with open(op.join(ROOT_BUILD_DIR, '{}.dat'.format(benchmark_name)), "wt",
+        with open(op.join(ROOT_BUILD_DIR, benchmark_name + '.dat'), "wt",
             encoding='utf-8') as out:
             out.write("Compiler moderncpp old-style\n")
             sorted_bench_files = sorted(bench_files,
-                                        key=lambda k: k.split('-')[-1].split('.')[-2])
+                                        key=lambda k: k.split(FIELDS_SEP)[-1].replace('.dat', ''))
             for compiler, fnames in it.groupby(sorted_bench_files,
-                                               lambda k: k.split('-')[-1].split('.')[-2]):
+                                               lambda k: k.split(FIELDS_SEP)[-1].replace('.dat', '')):
                 out.write(compiler + ' ')
                 for fname in fnames:
                     with open(fname, "rt",
