@@ -1,4 +1,5 @@
 reset
+set title benchmark_title
 set ylabel "milliseconds"
 set terminal png
 set output output_plot

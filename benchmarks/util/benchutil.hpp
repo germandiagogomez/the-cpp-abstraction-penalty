@@ -11,7 +11,7 @@ namespace benchmarks {
 namespace util {
 
 template <class F>
-auto time_it(F && f) {
+auto time_it_milliseconds(F && f) {
     namespace c = std::chrono;
 
     auto start = c::high_resolution_clock::now();

@@ -72,7 +72,7 @@ int main(int argc, char * argv[]) {
     for (int i = 0; i < times_exe; ++i) {
         c::milliseconds total_time;
         std::tie(total_time, std::ignore) =
-            time_it([] { return execute_sieve<100'000'000u>(); });
+            time_it_milliseconds([] { return execute_sieve<100'000'000u>(); });
         times.push_back(total_time);
     }
 

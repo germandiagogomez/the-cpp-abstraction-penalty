@@ -44,7 +44,7 @@ int main(int argc, char * argv[]) {
         int nums_read = 0;
 
         std::tie(total_time, nums_read) =
-            time_it([&numbers_string]() {  return read_numbers(numbers_string); });
+	  time_it_milliseconds([&numbers_string]() {  return read_numbers(numbers_string); });
         assert(nums_read == num_of_ints);
         times.push_back(total_time);
     }

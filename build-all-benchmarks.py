@@ -66,19 +66,24 @@ def generate_benchmark_files(compilers):
 def generate_plot(benchmark_name):
     benchmark_file = op.join(ROOT_BUILD_DIR, benchmark_name + '.dat')
     output_plot = op.join(ROOT_BUILD_DIR, benchmark_name + '.png')
+    benchmark_title = \
+        ' '.join(benchmark_name.replace('_', ' ').replace('-', ' ').split(' ')[1:]).capitalize()
+    
     plot_command = \
     '''
-    gnuplot -e "output_plot='{output_plot}';filename='{benchmark_file}'" {plot_file}
+    gnuplot -e "output_plot='{output_plot}';filename='{benchmark_file}';benchmark_title='{benchmark_title}'" \\
+    {plot_file}
     '''.format(benchmark_file=benchmark_file,
                output_plot=output_plot,
-               plot_file=PLOT_FILE_TEMPLATE)
-               
+               plot_file=PLOT_FILE_TEMPLATE,
+               benchmark_title=benchmark_title)
+    print(plot_command)
     sp.call(plot_command, shell=True)
+
 
 def generate_plots(root_dir):
     for benchmark_name in os.listdir(root_dir):
-        if benchmark_name[0] >= '0' and \
-           benchmark_name[0] <= '9':
+        if benchmark_name[0].isdigit():
             generate_plot(benchmark_name)
             
 
