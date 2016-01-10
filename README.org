@@ -32,9 +32,8 @@ There is a standard C++ proposal for inclusion based on this work.
 * Benchmark style and guidelines
 
 The scope of this benchmark set is very targeted:
-I want to show how typical, older-style or C-ish code
-or old-style C++ code
-performs against idiomatic modern C++ code.
+I want to show how typical, C-ish code
+or old-style C++ code performs against idiomatic modern C++ code.
 
 I want to limit the benchmarks to code that is easy to
 write for the average programmer, things that would be
@@ -44,7 +43,8 @@ attemp to perform an action, that look simple.
 For example, if there is an I/O benchmark of C I/O vs C++ I/O,
 I consider cheating to start to mess up with buffers and locales
 and advanced tricks to improve performance, because
-this is not what a normal programmer would write as a first attemp.
+this is not what a normal programmer would write 
+as a first attemp.
 
 Contributions will be accepted.
 Suggestions and ideas for new benchmarks are welcome as well.
@@ -78,7 +78,8 @@ This will:
 
 1. Build the binaries for your compilers.
 2. Run the binaries for the benchmark.
-3. Put, for each benchmark, a png file in build-all directory that you can merrily open when done to see the chart.
+3. Put, for each benchmark, a png file in build-all directory that you can happily 
+open when done to see the chart.
 
 
 *WARNING*: Only tested on my Mac OSX computer.
@@ -100,6 +101,8 @@ for now.
 ** Getting your benchmark to work.
 
 1. Create a directory for your benchmark in =benchmarks/your-benchmark-directory=.
+   =your-benchmark-directory= must be of the form =\d+-benchname. 
+
 2. Use a template like the one below for your CMakeLists.txt in the newly created directory:
    #+BEGIN_src 
    if (UNIX)
@@ -117,14 +120,11 @@ for now.
 5. When done, just send a pull request. I will try to take a look, mainly at weekends due to my workload. :)
 
 ** Variables reference.
-|-----------------------+-----------------------------------------------------------|
-| Read-only variable    | Meaning                                                   |
-|-----------------------+-----------------------------------------------------------|
-| TCPPAP_BENCHMARKS_DIR | Directory where benchmarks hang from.                     |
-| TCPPAP_MODULES_DIR    | Submodules directory for any dependencies for benchmarks. |
-|-----------------------+-----------------------------------------------------------|
-
-
+|---------------------------------+--------------------------------------------------------------------------|
+| Read-only variable              | Meaning                                                                  |
+|---------------------------------+--------------------------------------------------------------------------|
+| TCPPAP_BENCHMARKS_DIR           | Directory where benchmarks hang from.                                    |
+| TCPPAP_MODULES_DIR              | Submodules directory for any dependencies for benchmarks.                |
 |---------------------------------+--------------------------------------------------------------------------|
 | User variable                   | Meaning                                                                  |
 |---------------------------------+--------------------------------------------------------------------------|
