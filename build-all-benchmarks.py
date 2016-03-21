@@ -91,6 +91,13 @@ def generate_plots(root_dir):
             generate_plot(benchmark_name)
             
 
+def correct_benchmark_result_org_paths(filename_in, filename_out):
+    file_lines = []
+    with open(filename_in, "r") as f:
+        #TODO: Replace org links with relative paths
+        pass
+                
+    
 def copy_plots(plots_source_dir, plots_dest_dir):
     for f in os.listdir(plots_source_dir):
         if f[0].isdigit() and \

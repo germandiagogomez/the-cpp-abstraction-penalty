@@ -140,6 +140,7 @@ a look, mainly at weekends due to my workload. :)
 | TCPPAP_OLD_STYLE_SOURCES        | Source files for old benchmark executable.                               |
 | TCPPAP_OLD_STYLE_INCLUDES       | Use for include directories for only old style benchmark exe.            |
 | TCPPAP_INCLUDES                 | Use for include directories for both modern and old style benchmark exe. |
+| TCPPAP_PROGRAM_ARGS             | Arguments passed to the benchmark programs when running                  |
 |---------------------------------+--------------------------------------------------------------------------|
 
 * Benchmarks results
@@ -159,18 +160,14 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ** Results
 
+- %TCPPAP_BENCHMARK_TITLE%
+   - [[%TCPPAP_OLD_STYLE_SOURCES%]].
+   - [[%TCPPAP_MODERNCPP_STYLE_SOURCES%]].
 
 
-- Sequential sieve algorithm.
-   - [[./benchmarks/01-sieve/raw_sieve.cpp][Raw sieve]].
-   - [[./benchmarks/01-sieve/ranges_sieve.cpp][Ranges Sieve]].
+#+CAPTION: %TCPPAP_BENCHMARK_TITLE% benchmark result.
+#+NAME: fig:%TCPPAP_BENCHMARK_NAME%-bench
+
+[[%PLOTS_DIR%/%TCPPPAP_BENCHMARK_NAME%.png]]
 
 
-#+CAPTION: Sieve benchmark result.
-#+NAME: fig:sieve-bench
-[[./plots/01-sieve.png]]
-
-
-#+CAPTION: Formatted read benchmark result.
-#+NAME: fig:formatted_read-bench
-[[./plots/02-formatted_read.png]]

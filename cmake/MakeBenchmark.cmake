@@ -32,7 +32,6 @@ target_include_directories(
   ${TCPPAP_INCLUDES}
   ${TCPPAP_OLD_STYLE_INCLUDES})
 
-
 add_custom_target(execute_${OLD_STYLE_EXE} ALL
   ${MODERNCPP_STYLE_EXE} ${TCPPAP_PROGRAM_ARGS} >> ${CMAKE_BINARY_DIR}/${MODERNCPP_STYLE_EXE}.dat
   DEPENDS ${MODERNCPP_STYLE_EXE} 
@@ -43,6 +42,6 @@ add_custom_target(execute_${MODERNCPP_STYLE_EXE} ALL
   DEPENDS ${OLD_STYLE_EXE}
   COMMENT "Executing ${OLD_STYLE_EXE} ${TCPPAP_PROGRAM_ARGS}")
 
-
+configure_file(${CMAKE_CURRENT_LIST_DIR}/../scripts/bench-result.org.in bench-result.org @ONLY)
   
   

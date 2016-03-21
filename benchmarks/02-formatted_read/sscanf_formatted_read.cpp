@@ -17,7 +17,7 @@ namespace s = std;
 
 namespace c = std::chrono;
 
-using benchmarks::util::generate_ints;
+using benchmarks::util::generate_ints_string;
 
 
 int read_numbers(s::string const & data) {
@@ -47,7 +47,7 @@ int main(int argc, char * argv[]) {
 
     for (int i = 0; i < times_exe; ++i) {
         c::milliseconds total_time;
-        auto numbers_string = generate_ints(num_of_ints);
+        auto numbers_string = generate_ints_string(num_of_ints);
         int nums_read = 0;
 
         std::tie(total_time, nums_read) =

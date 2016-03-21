@@ -2,7 +2,7 @@ if (UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
 endif()
 
-
+set(TCPPAP_BENCHMARK_TITLE Sieve)
 set(TCPPAP_BENCHMARK_NAME 01-sieve)
 set(TCPPAP_OLD_STYLE_SOURCES raw_sieve.cpp)
 set(TCPPAP_MODERNCPP_STYLE_SOURCES ranges_sieve.cpp)

@@ -32,8 +32,9 @@ There is a standard C++ proposal for inclusion based on this work.
 * Benchmark style and guidelines
 
 The scope of this benchmark set is very targeted:
-I want to show how typical, C-ish code
-or old-style C++ code performs against idiomatic modern C++ code.
+I want to show how typical, older-style or C-ish code
+or old-style C++ code
+performs against idiomatic modern C++ code.
 
 I want to limit the benchmarks to code that is easy to
 write for the average programmer, things that would be
@@ -43,8 +44,7 @@ attemp to perform an action, that look simple.
 For example, if there is an I/O benchmark of C I/O vs C++ I/O,
 I consider cheating to start to mess up with buffers and locales
 and advanced tricks to improve performance, because
-this is not what a normal programmer would write 
-as a first attemp.
+this is not what a normal programmer would write as a first attemp.
 
 Contributions will be accepted.
 Suggestions and ideas for new benchmarks are welcome as well.
@@ -57,9 +57,8 @@ So you want to run the benchmark yourself in your computer...
 
 Prerequisites:
 
-- [[https://cmake.org/download/][CMake]].
-- [[https://www.python.org/downloads/][Python 3]].
-- [[http://www.gnuplot.info/download.html][GNUPlot]].
+- python 3 (though currently cmake is looking for python 2!).
+- gnuplot.
 - compilers to run the benchmarks against (only tested g++ and clang++ in OS X at this time).
 
 NOTE: Not tested in Visual Studio compiler yet, but it should work.
@@ -78,9 +77,9 @@ This will:
 
 1. Build the binaries for your compilers.
 2. Run the binaries for the benchmark.
-3. Put, for each benchmark, a png file in build-all directory that you can happily 
-open when done to see the chart.
-
+3. Put, for each benchmark, a png file in
+build-all directory that you can merrily open when done to
+see the chart.
 
 *WARNING*: Only tested on my Mac OSX computer.
 
@@ -100,39 +99,48 @@ for now.
 
 ** Getting your benchmark to work.
 
-1. Create a directory for your benchmark in =benchmarks/your-benchmark-directory=.
-   =your-benchmark-directory= must be of the form =\d+-benchname. 
+1. Create a directory for your benchmark in
+=benchmarks/your-benchmark-directory=.
+2. Use a template like the one below for your CMakeLists.txt in
+the newly created directory:
 
-2. Use a template like the one below for your CMakeLists.txt in the newly created directory:
-   #+BEGIN_src 
-   if (UNIX)
-     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
-   endif()
+#+BEGIN_src 
+if (UNIX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
+endif()
 
-   set(TCPPAP_BENCHMARK_NAME my-benchmark-name)
-   set(TCPPAP_OLD_STYLE_SOURCES my_file1.cpp ...)
-   set(TCPPAP_MODERNCPP_STYLE_SOURCES my_modern_file1.cpp ...)
+set(TCPPAP_BENCHMARK_NAME my-benchmark-name)
+set(TCPPAP_OLD_STYLE_SOURCES my_file1.cpp ...)
+set(TCPPAP_MODERNCPP_STYLE_SOURCES my_modern_file1.cpp ...)
 
-   include(MakeBenchmark)		 
-   #+END_src
-3. (For now) Take a look at the provided main function examples for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
+include(MakeBenchmark)		 
+#+END_src
+
+3. (For now) Take a look at the provided main function examples 
+for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
+
 4. Create a branch for working on your benchmark.
-5. When done, just send a pull request. I will try to take a look, mainly at weekends due to my workload. :)
+
+5. When done, just send a pull request. I will try to take
+a look, mainly at weekends due to my workload. :)
 
 ** Variables reference.
+|-----------------------+-----------------------------------------------------------|
+| Read-only variable    | Meaning                                                   |
+|-----------------------+-----------------------------------------------------------|
+| TCPPAP_BENCHMARKS_DIR | Directory where benchmarks hang from.                     |
+| TCPPAP_MODULES_DIR    | Submodules directory for any dependencies for benchmarks. |
+|-----------------------+-----------------------------------------------------------|
+
 |---------------------------------+--------------------------------------------------------------------------|
-| Read-only variable              | Meaning                                                                  |
-|---------------------------------+--------------------------------------------------------------------------|
-| TCPPAP_BENCHMARKS_DIR           | Directory where benchmarks hang from.                                    |
-| TCPPAP_MODULES_DIR              | Submodules directory for any dependencies for benchmarks.                |
-|---------------------------------+--------------------------------------------------------------------------|
-| User variable                   | Meaning                                                                  |
+| User variable                   |                                                                          |
 |---------------------------------+--------------------------------------------------------------------------|
 | TCPPAP_MODERNCPP_STYLE_SOURCES  | Source files for modern benchmark executable.                            |
 | TCPPAP_MODERNCPP_STYLE_INCLUDES | Use for include directories for only modern style benchmark exe.         |
 | TCPPAP_OLD_STYLE_SOURCES        | Source files for old benchmark executable.                               |
 | TCPPAP_OLD_STYLE_INCLUDES       | Use for include directories for only old style benchmark exe.            |
 | TCPPAP_INCLUDES                 | Use for include directories for both modern and old style benchmark exe. |
+| TCPPAP_PROGRAM_ARGS             | Arguments passed to the benchmark programs when running                  |
 |---------------------------------+--------------------------------------------------------------------------|
 
 * Benchmarks results
@@ -152,23 +160,14 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ** Results
 
-
-- Sequential sieve algorithm.
-   - [[./benchmarks/01-sieve/raw_sieve.cpp][Raw sieve]].
-   - [[./benchmarks/01-sieve/ranges_sieve.cpp][Ranges Sieve]].
-
-
-#+CAPTION: Sieve benchmark result.
-#+NAME: fig:sieve-bench
-[[./plots/01-sieve.png]]
+- %TCPPAP_BENCHMARK_TITLE%
+   - [[%TCPPAP_OLD_STYLE_SOURCES%]].
+   - [[%TCPPAP_MODERNCPP_STYLE_SOURCES%]].
 
 
-- Formatted read.
-   - [[./benchmarks/02-formatted_read/sscanf_formatted_read.cpp][Sscanf read]].
-   - [[./benchmarks/02-formatted_read/stringstream_formatted_read.cpp][String stream read]].
+#+CAPTION: %TCPPAP_BENCHMARK_TITLE% benchmark result.
+#+NAME: fig:%TCPPAP_BENCHMARK_NAME%-bench
 
+[[%PLOTS_DIR%/%TCPPPAP_BENCHMARK_NAME%.png]]
 
-#+CAPTION: Formatted read benchmark result.
-#+NAME: fig:formatted_read-bench
-[[./plots/02-formatted_read.png]]
 

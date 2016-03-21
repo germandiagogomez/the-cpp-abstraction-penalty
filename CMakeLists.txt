@@ -29,3 +29,4 @@ foreach (BENCHMARK ${BENCHMARKS_NAMES})
   add_subdirectory(${BENCHMARKS_DIR}/${BENCHMARK})
 endforeach(BENCHMARK)
 
+
