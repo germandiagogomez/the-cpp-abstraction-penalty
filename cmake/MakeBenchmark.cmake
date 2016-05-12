@@ -9,7 +9,6 @@ endif()
 set(PLOTS_DIR ${CMAKE_SOURCE_DIR}/plots)
 set(PLOTS_BASE_DIR plots)
 
-
 if (UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
 endif()
@@ -44,6 +43,12 @@ add_custom_target(execute_${MODERNCPP_STYLE_EXE} ALL
   DEPENDS ${OLD_STYLE_EXE}
   COMMENT "Executing ${OLD_STYLE_EXE} ${TCPPAP_PROGRAM_ARGS}")
 
+set(_TCPPAP_OLD_STYLE_SOURCES_GITHUB_PATH
+  benchmarks/${TCPPAP_BENCHMARK_NAME}/${TCPPAP_OLD_STYLE_SOURCES})
+
+set(_TCPPAP_MODERNCPP_STYLE_SOURCES_GITHUB_PATH
+  benchmarks/${TCPPAP_BENCHMARK_NAME}/${TCPPAP_MODERNCPP_STYLE_SOURCES})
+               
 configure_file(${CMAKE_CURRENT_LIST_DIR}/../scripts/bench-result.org.in bench-result.org @ONLY)
   
 

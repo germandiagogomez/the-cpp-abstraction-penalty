@@ -160,8 +160,8 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ** Results
 - Sieve
-   - [[raw_sieve.cpp]].
-   - [[ranges_sieve.cpp]].
+   - [[benchmarks/01-sieve/raw_sieve.cpp]].
+   - [[benchmarks/01-sieve/ranges_sieve.cpp]].
 
 
 #+CAPTION: Sieve benchmark result.
@@ -172,8 +172,8 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ----------------------------------------------------
 - Formatted read
-   - [[sscanf_formatted_read.cpp]].
-   - [[stringstream_formatted_read.cpp]].
+   - [[benchmarks/02-formatted_read/sscanf_formatted_read.cpp]].
+   - [[benchmarks/02-formatted_read/stringstream_formatted_read.cpp]].
 
 
 #+CAPTION: Formatted read benchmark result.
@@ -184,8 +184,8 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ----------------------------------------------------
 - Trivial type: memcpy vs std::copy
-   - [[use_memcpy.cpp]].
-   - [[use_std_copy.cpp]].
+   - [[benchmarks/03-trivial-type-copy/use_memcpy.cpp]].
+   - [[benchmarks/03-trivial-type-copy/use_std_copy.cpp]].
 
 
 #+CAPTION: Trivial type: memcpy vs std::copy benchmark result.
@@ -196,8 +196,8 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ----------------------------------------------------
 - Non-trivial for-loop vs std::copy
-   - [[use_for_loop.cpp]].
-   - [[use_std_copy.cpp]].
+   - [[benchmarks/04-non-trivial-type-copy/use_for_loop.cpp]].
+   - [[benchmarks/04-non-trivial-type-copy/use_std_copy.cpp]].
 
 
 #+CAPTION: Non-trivial for-loop vs std::copy benchmark result.
