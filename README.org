@@ -10,7 +10,7 @@ For every benchmark,
 two implementations are introduced:
 
 - raw implementation.
-- Modern C++ implementation.
+- modern C++ implementation.
 
 The goal is to put them front to front
 to see how they perform against each other,
@@ -83,7 +83,7 @@ see the chart.
 
 *WARNING*: Only tested on my Mac OSX computer.
 
-* How to contribute a new benchmark.
+* How to contribute a new benchmark
 
 Your benchmark must return the number of milliseconds that
 took for it to execute as an integer number. The provided
@@ -193,5 +193,17 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 
 [[plots/03-trivial-type-copy.png]]
+
+----------------------------------------------------
+- Non-trivial for-loop vs std::copy
+   - [[use_for_loop.cpp]].
+   - [[use_std_copy.cpp]].
+
+
+#+CAPTION: Non-trivial for-loop vs std::copy benchmark result.
+#+NAME: fig:04-non-trivial-type-copy-bench
+
+
+[[plots/04-non-trivial-type-copy.png]]
 
 ----------------------------------------------------
