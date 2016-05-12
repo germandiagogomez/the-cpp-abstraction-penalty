@@ -89,7 +89,7 @@ Your benchmark must return the number of milliseconds that
 took for it to execute as an integer number. The provided
 benchmarks return the median of 5 executions, so
 for now I recomend to just do this. There is a utility file
-in =${TCPPAP_BENCHMARKS_DIR}/util= that you can
+in =@TCPPAP_BENCHMARKS_DIR@/util= that you can
 use for timing.
 
 
