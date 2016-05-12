@@ -9,6 +9,7 @@ import glob
 import sys
 import collections as col
 
+
 COMPILERS = ('clang++', 'g++')
 ROOT_BUILD_DIR = 'build-all'
 PLOT_FILE_TEMPLATE = 'scripts/plot_data.plt'
@@ -25,17 +26,23 @@ def create_directories_for_compilers(compilers):
         build_dir = op.join(ROOT_BUILD_DIR, get_build_dir(compiler))
         os.makedirs(build_dir)
 
+class CMakeException(RuntimeError):
+    pass
 
 def run_benchmarks_for_compilers(compilers):
     old_working_dir = os.getcwd()
     for compiler in compilers:
         build_dir = op.join(ROOT_BUILD_DIR, get_build_dir(compiler))
         os.chdir(build_dir)
-        sp.call(['cmake', '-DCMAKE_CXX_COMPILER={}'.format(compiler),
+        retcode = sp.call(['cmake', '-DCMAKE_CXX_COMPILER={}'.format(compiler),
                 '-DTCPPAP_CXX_COMPILER_ID={}'.format(compiler),
                 '../..'])
-        sp.call(['make', '-j5'])
         os.chdir(old_working_dir)
+        if retcode:
+            raise CMakeException("CMake configuration step failed")
+        retcode = sp.call(['cmake', '--build', build_dir])
+        if retcode:
+            raise CMakeException("Run step failed")
 
 
 def generate_benchmark_files(compilers):
@@ -81,7 +88,6 @@ def generate_plot(benchmark_name):
                output_plot=output_plot,
                plot_file=PLOT_FILE_TEMPLATE,
                benchmark_title=benchmark_title)
-    print(plot_command)
     sp.call(plot_command, shell=True)
 
 
@@ -89,22 +95,14 @@ def generate_plots(root_dir):
     for benchmark_name in os.listdir(root_dir):
         if benchmark_name[0].isdigit():
             generate_plot(benchmark_name)
-            
 
-def correct_benchmark_result_org_paths(filename_in, filename_out):
-    file_lines = []
-    with open(filename_in, "r") as f:
-        #TODO: Replace org links with relative paths
-        pass
-                
-    
+            
 def copy_plots(plots_source_dir, plots_dest_dir):
     for f in os.listdir(plots_source_dir):
         if f[0].isdigit() and \
            f.endswith('.png'):
             shutil.copyfile(op.join(plots_source_dir, f),
                             op.join(plots_dest_dir, f))
-            
 
 #TODO: A decent command line
 if __name__ == '__main__':
@@ -116,5 +114,6 @@ if __name__ == '__main__':
 
     generate_benchmark_files(COMPILERS)
     generate_plots(BENCHMARKS_DIR)
-    #copy_plots('build-all', PLOTS_DIR)
+    os.makedirs(PLOTS_DIR)
+    copy_plots('build-all', PLOTS_DIR)
         

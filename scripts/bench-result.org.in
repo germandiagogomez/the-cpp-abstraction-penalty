@@ -7,5 +7,6 @@
 #+NAME: fig:@TCPPAP_BENCHMARK_NAME@-bench
 
 
-[[@PLOTS_DIR@/@TCPPAP_BENCHMARK_NAME@.png]]
+[[@PLOTS_BASE_DIR@/@TCPPAP_BENCHMARK_NAME@.png]]
 
+----------------------------------------------------

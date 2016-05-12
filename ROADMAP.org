@@ -1,5 +1,3 @@
-** DONE [#A] Move separate Makefile.in and make-modules to one place and reuse in all benchs.
-   CLOSED: [2015-09-12 Sat 12:31]
 ** TODO [#A] Add target so that benchmark plots are automatically shown in github README.org.
 ** DONE [#A] Add parameters for benchmark size and repetitions from Make invocation.
    CLOSED: [2015-09-12 Sat 12:31]

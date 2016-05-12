@@ -7,6 +7,8 @@ if (NOT TCPPAP_CXX_COMPILER_ID)
 endif()
   
 set(PLOTS_DIR ${CMAKE_SOURCE_DIR}/plots)
+set(PLOTS_BASE_DIR plots)
+
 
 if (UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
@@ -44,4 +46,4 @@ add_custom_target(execute_${MODERNCPP_STYLE_EXE} ALL
 
 configure_file(${CMAKE_CURRENT_LIST_DIR}/../scripts/bench-result.org.in bench-result.org @ONLY)
   
-  
+

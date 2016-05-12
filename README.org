@@ -1,7 +1,7 @@
 * Purpose
 
 This is a set of benchmarks in C++ that tries
-to compare "raw/C-ish code" or old C++ style 
+to compare "raw/C-ish code" or old C++ style
 implementations vs "library-based, modern C++"
 implementations of some algorithms and compares
 their execution time.
@@ -49,7 +49,7 @@ this is not what a normal programmer would write as a first attemp.
 Contributions will be accepted.
 Suggestions and ideas for new benchmarks are welcome as well.
 I will reserve for myself the right to accept or reject a benchmark
-to the set of benchmarks, with the hope of keeping it focused. :). 
+to the set of benchmarks, with the hope of keeping it focused. :).
 
 * Compile and run the benchmarks
 
@@ -93,7 +93,7 @@ in =${TCPPAP_BENCHMARKS_DIR}/util= that you can
 use for timing.
 
 
-NOTE: Maybe I will take a more scientific look at how to achieve 
+NOTE: Maybe I will take a more scientific look at how to achieve
 more accurate results in the future, but this will suffice
 for now.
 
@@ -104,7 +104,7 @@ for now.
 2. Use a template like the one below for your CMakeLists.txt in
 the newly created directory:
 
-#+BEGIN_src 
+#+BEGIN_src
 if (UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
 endif()
@@ -113,10 +113,10 @@ set(TCPPAP_BENCHMARK_NAME my-benchmark-name)
 set(TCPPAP_OLD_STYLE_SOURCES my_file1.cpp ...)
 set(TCPPAP_MODERNCPP_STYLE_SOURCES my_modern_file1.cpp ...)
 
-include(MakeBenchmark)		 
+include(MakeBenchmark)
 #+END_src
 
-3. (For now) Take a look at the provided main function examples 
+3. (For now) Take a look at the provided main function examples
 for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
 
 4. Create a branch for working on your benchmark.
@@ -159,15 +159,39 @@ The versions of the compilers used for the benchmarks in my computer are:
      Thread model: posix.
 
 ** Results
-
-- %TCPPAP_BENCHMARK_TITLE%
-   - [[%TCPPAP_OLD_STYLE_SOURCES%]].
-   - [[%TCPPAP_MODERNCPP_STYLE_SOURCES%]].
-
-
-#+CAPTION: %TCPPAP_BENCHMARK_TITLE% benchmark result.
-#+NAME: fig:%TCPPAP_BENCHMARK_NAME%-bench
-
-[[%PLOTS_DIR%/%TCPPPAP_BENCHMARK_NAME%.png]]
+- Sieve
+   - [[raw_sieve.cpp]].
+   - [[ranges_sieve.cpp]].
 
 
+#+CAPTION: Sieve benchmark result.
+#+NAME: fig:01-sieve-bench
+
+
+[[plots/01-sieve.png]]
+
+----------------------------------------------------
+- Formatted read
+   - [[sscanf_formatted_read.cpp]].
+   - [[stringstream_formatted_read.cpp]].
+
+
+#+CAPTION: Formatted read benchmark result.
+#+NAME: fig:02-formatted_read-bench
+
+
+[[plots/02-formatted_read.png]]
+
+----------------------------------------------------
+- Trivial type: memcpy vs std::copy
+   - [[use_memcpy.cpp]].
+   - [[use_std_copy.cpp]].
+
+
+#+CAPTION: Trivial type: memcpy vs std::copy benchmark result.
+#+NAME: fig:03-trivial-type-copy-bench
+
+
+[[plots/03-trivial-type-copy.png]]
+
+----------------------------------------------------
