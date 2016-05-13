@@ -1,7 +1,8 @@
-** TODO [#A] Add target so that benchmark plots are automatically shown in github README.org.
+** DONE [#A] Add target so that benchmark plots are automatically shown in github README.org.
 ** DONE [#A] Add parameters for benchmark size and repetitions from Make invocation.
    CLOSED: [2015-09-12 Sat 12:31]
-** TODO [#A] Make easy to contribute benchmarks through script.
-*** TODO Create a single generic makefile for any benchmark so that users can start with that.
+** DONE [#A] Make easy to contribute benchmarks through script.
 ** DONE Pass COMPILERS variable when invoking recursive make
    CLOSED: [2015-09-21 Mon 01:06]
+** TODO Create a decent command line for users of run_all_benchmarks.py
+** TODO Benchmarks: qsort vs std::sort, memset vs std::fill, memcmp vs std::equal, std::function vs pointer to function?
