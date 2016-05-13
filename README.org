@@ -73,13 +73,13 @@ git submodule update
 ./build-all-benchmarks.py [compiler-exes]
 #+END_src
 
-This will:
+This will do the following:
 
-1. Build the binaries for your compilers.
-2. Run the binaries for the benchmark.
-3. Put, for each benchmark, a png file in
-build-all directory that you can merrily open when done to
-see the chart.
+ 1. Build the binaries for your compilers.
+ 2. Run the binaries for the benchmark.
+ 3. Put, for each benchmark, a png file in
+    build-all directory that you can merrily open when done to
+    see the chart.
 
 *WARNING*: Only tested on my Mac OSX computer.
 
@@ -97,34 +97,39 @@ NOTE: Maybe I will take a more scientific look at how to achieve
 more accurate results in the future, but this will suffice
 for now.
 
-** Getting your benchmark to work.
+** Getting your benchmark to work
 
-1. Create a directory for your benchmark in
-=benchmarks/your-benchmark-directory=.
-2. Use a template like the one below for your CMakeLists.txt in
-the newly created directory:
+  1. Create a directory for your benchmark in
+     =benchmarks/your-benchmark-directory=.
+  2. Use a template like the one below for your CMakeLists.txt in
+     the newly created directory:
 
 #+BEGIN_src
 if (UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
 endif()
 
+set(TCPPAP_BENCHMARK_TITLE "Title for benchmark")
+set(TCPPAP_BENCHMARK_NAME <dir-name-for-benchmark>)
 set(TCPPAP_BENCHMARK_NAME my-benchmark-name)
 set(TCPPAP_OLD_STYLE_SOURCES my_file1.cpp ...)
 set(TCPPAP_MODERNCPP_STYLE_SOURCES my_modern_file1.cpp ...)
 
+#Example benchmark parameters
+set(TCPPAP_PROGRAM_ARGS 5 10000000)
+
 include(MakeBenchmark)
 #+END_src
 
-3. (For now) Take a look at the provided main function examples
-for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
+  3. Take a look at the provided main function examples
+     for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
 
-4. Create a branch for working on your benchmark.
+  4. Fork the repo and create a branch for working on your benchmark.
 
-5. When done, just send a pull request. I will try to take
-a look, mainly at weekends due to my workload. :)
+  5. When done, just send a pull request. I will try to take
+     a look, mainly at weekends due to my workload. :)
 
-** Variables reference.
+** Variables reference
 |-----------------------+-----------------------------------------------------------|
 | Read-only variable    | Meaning                                                   |
 |-----------------------+-----------------------------------------------------------|
@@ -135,6 +140,8 @@ a look, mainly at weekends due to my workload. :)
 |---------------------------------+--------------------------------------------------------------------------|
 | User variable                   |                                                                          |
 |---------------------------------+--------------------------------------------------------------------------|
+| TCPPAP_BENCHMARK_TITLE          | Free form title such as "std::memcpy vs std::copy"                       |
+| TCPPAP_BENCHMARK_NAME           | This is the benchmark name, which must match the directory name          |
 | TCPPAP_MODERNCPP_STYLE_SOURCES  | Source files for modern benchmark executable.                            |
 | TCPPAP_MODERNCPP_STYLE_INCLUDES | Use for include directories for only modern style benchmark exe.         |
 | TCPPAP_OLD_STYLE_SOURCES        | Source files for old benchmark executable.                               |
