@@ -137,8 +137,9 @@ include(MakeBenchmark)
 | TCPPAP_MODULES_DIR    | Submodules directory for any dependencies for benchmarks. |
 |-----------------------+-----------------------------------------------------------|
 
+
 |---------------------------------+--------------------------------------------------------------------------|
-| User variable                   |                                                                          |
+| User variable                   | Meaning                                                                  |
 |---------------------------------+--------------------------------------------------------------------------|
 | TCPPAP_BENCHMARK_TITLE          | Free form title such as "std::memcpy vs std::copy"                       |
 | TCPPAP_BENCHMARK_NAME           | This is the benchmark name, which must match the directory name          |
