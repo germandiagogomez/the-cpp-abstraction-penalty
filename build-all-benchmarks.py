@@ -17,6 +17,7 @@ BENCHMARKS_DIR = 'benchmarks'
 PLOTS_DIR = 'plots'
 FIELDS_SEP = '--'
 
+
 def get_build_dir(compiler):
     return FIELDS_SEP.join(['build', compiler])
 
@@ -26,10 +27,15 @@ def create_directories_for_compilers(compilers):
         build_dir = op.join(ROOT_BUILD_DIR, get_build_dir(compiler))
         os.makedirs(build_dir)
 
+        
 class CMakeException(RuntimeError):
     pass
 
+
 def run_benchmarks_for_compilers(compilers):
+    global BENCHMARKS_DIR
+    global PLOT_FILE_TEMPLATE
+        
     old_working_dir = os.getcwd()
     for compiler in compilers:
         build_dir = op.join(ROOT_BUILD_DIR, get_build_dir(compiler))
@@ -37,9 +43,18 @@ def run_benchmarks_for_compilers(compilers):
         retcode = sp.call(['cmake', '-DCMAKE_CXX_COMPILER={}'.format(compiler),
                 '-DTCPPAP_CXX_COMPILER_ID={}'.format(compiler),
                 '../..'])
+        if retcode:
+            retcode = sp.call(['cmake', '-DCMAKE_CXX_COMPILER={}'.format(compiler),
+                '-DTCPPAP_CXX_COMPILER_ID={}'.format(compiler),
+                '../../..'])
+            cmake_src_dir = os.path.abspath('../../..')
+            BENCHMARKS_DIR = os.path.join(cmake_src_dir, BENCHMARKS_DIR)
+            PLOT_FILE_TEMPLATE = os.path.join(cmake_src_dir, PLOT_FILE_TEMPLATE)
+            
         os.chdir(old_working_dir)
         if retcode:
             raise CMakeException("CMake configuration step failed")
+        
         retcode = sp.call(['cmake', '--build', build_dir])
         if retcode:
             raise CMakeException("Run step failed")
@@ -115,5 +130,5 @@ if __name__ == '__main__':
     generate_benchmark_files(COMPILERS)
     generate_plots(BENCHMARKS_DIR)
     os.makedirs(PLOTS_DIR)
-    copy_plots('build-all', PLOTS_DIR)
+    copy_plots(ROOT_BUILD_DIR, PLOTS_DIR)
         
