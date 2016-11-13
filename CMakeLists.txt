@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
 
+#Inserted comment to test github hook
 project(the-cpp-abstraction-penalty)
 set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 
