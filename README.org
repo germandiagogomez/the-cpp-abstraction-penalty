@@ -214,3 +214,15 @@ The versions of the compilers used for the benchmarks in my computer are:
 [[plots/04-non-trivial-type-copy.png]]
 
 ----------------------------------------------------
+- qsort vs stl sort
+   - [[benchmarks/05-qsort-vs-stl-sort/qsort.cpp]].
+   - [[benchmarks/05-qsort-vs-stl-sort/stl_sort.cpp]].
+
+
+#+CAPTION: qsort vs stl sort benchmark result.
+#+NAME: fig:05-qsort-vs-stl-sort-bench
+
+
+[[plots/05-qsort-vs-stl-sort.png]]
+
+----------------------------------------------------
