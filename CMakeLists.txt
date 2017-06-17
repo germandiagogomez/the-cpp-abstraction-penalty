@@ -44,5 +44,7 @@ if (CAT)
 
   add_custom_target(update_readme_org_results
     COMMAND ${CAT} ${PROJECT_SOURCE_DIR}/README.org.in ${BENCH_RESULTS} > ${CMAKE_SOURCE_DIR}/README.org.new)
+else()
+  message(FATAL_ERROR "cat or type program not found.")
 endif()
 
