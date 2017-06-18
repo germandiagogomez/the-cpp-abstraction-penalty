@@ -167,8 +167,8 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ** Results
 - Sieve
-   - [[benchmarks/01-sieve/raw_sieve.cpp]].
-   - [[benchmarks/01-sieve/ranges_sieve.cpp]].
+   - [[benchmarks/01-sieve/raw_sieve.cpp]] -> [[plots/assembly/assembly-clang++/raw_sieve.cpp.s]]
+   - [[benchmarks/01-sieve/ranges_sieve.cpp]] -> [[plots/assembly/assembly-clang++/ranges_sieve.cpp.s]]
 
 
 #+CAPTION: Sieve benchmark result.
@@ -179,8 +179,8 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ----------------------------------------------------
 - Formatted read
-   - [[benchmarks/02-formatted_read/sscanf_formatted_read.cpp]].
-   - [[benchmarks/02-formatted_read/stringstream_formatted_read.cpp]].
+   - [[benchmarks/02-formatted_read/sscanf_formatted_read.cpp]] -> [[plots/assembly/assembly-clang++/sscanf_formatted_read.cpp.s]]
+   - [[benchmarks/02-formatted_read/stringstream_formatted_read.cpp]] -> [[plots/assembly/assembly-clang++/stringstream_formatted_read.cpp.s]]
 
 
 #+CAPTION: Formatted read benchmark result.
@@ -191,8 +191,8 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ----------------------------------------------------
 - Trivial type: memcpy vs std::copy
-   - [[benchmarks/03-trivial-type-copy/use_memcpy.cpp]].
-   - [[benchmarks/03-trivial-type-copy/use_std_copy.cpp]].
+   - [[benchmarks/03-trivial-type-copy/use_memcpy.cpp]] -> [[plots/assembly/assembly-clang++/use_memcpy.cpp.s]]
+   - [[benchmarks/03-trivial-type-copy/use_std_copy.cpp]] -> [[plots/assembly/assembly-clang++/use_std_copy.cpp.s]]
 
 
 #+CAPTION: Trivial type: memcpy vs std::copy benchmark result.
@@ -203,8 +203,8 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ----------------------------------------------------
 - Non-trivial for-loop vs std::copy
-   - [[benchmarks/04-non-trivial-type-copy/use_for_loop.cpp]].
-   - [[benchmarks/04-non-trivial-type-copy/use_std_copy.cpp]].
+   - [[benchmarks/04-non-trivial-type-copy/use_for_loop.cpp]] -> [[plots/assembly/assembly-clang++/use_for_loop.cpp.s]]
+   - [[benchmarks/04-non-trivial-type-copy/use_std_copy.cpp]] -> [[plots/assembly/assembly-clang++/use_std_copy.cpp.s]]
 
 
 #+CAPTION: Non-trivial for-loop vs std::copy benchmark result.
@@ -215,8 +215,8 @@ The versions of the compilers used for the benchmarks in my computer are:
 
 ----------------------------------------------------
 - qsort vs stl sort
-   - [[benchmarks/05-qsort-vs-stl-sort/qsort.cpp]].
-   - [[benchmarks/05-qsort-vs-stl-sort/stl_sort.cpp]].
+   - [[benchmarks/05-qsort-vs-stl-sort/qsort.cpp]] -> [[plots/assembly/assembly-clang++/qsort.cpp.s]]
+   - [[benchmarks/05-qsort-vs-stl-sort/stl_sort.cpp]] -> [[plots/assembly/assembly-clang++/stl_sort.cpp.s]]
 
 
 #+CAPTION: qsort vs stl sort benchmark result.

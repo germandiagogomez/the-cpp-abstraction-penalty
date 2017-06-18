@@ -9,6 +9,7 @@ endif()
 set(PLOTS_DIR ${CMAKE_SOURCE_DIR}/plots)
 set(PLOTS_BASE_DIR plots)
 
+
 if (UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
 endif()
@@ -34,8 +35,6 @@ target_include_directories(
   ${TCPPAP_OLD_STYLE_INCLUDES})
 
 
-
-
 add_custom_target(execute_${OLD_STYLE_EXE} 
   ${MODERNCPP_STYLE_EXE} ${TCPPAP_PROGRAM_ARGS} >> ${CMAKE_BINARY_DIR}/${MODERNCPP_STYLE_EXE}.dat
   DEPENDS ${MODERNCPP_STYLE_EXE} 
@@ -54,6 +53,12 @@ set(_TCPPAP_OLD_STYLE_SOURCES_GITHUB_PATH
 set(_TCPPAP_MODERNCPP_STYLE_SOURCES_GITHUB_PATH
   benchmarks/${TCPPAP_BENCHMARK_NAME}/${TCPPAP_MODERNCPP_STYLE_SOURCES})
 
+
+set(_TCPPAP_OLD_STYLE_ASSEMBLY_GITHUB_PATH
+  plots/assembly/assembly-${TCPPAP_CXX_COMPILER_ID}/${TCPPAP_OLD_STYLE_SOURCES}.s)
+
+set(_TCPPAP_MODERNCPP_STYLE_ASSEMBLY_GITHUB_PATH
+  plots/assembly/assembly-${TCPPAP_CXX_COMPILER_ID}/${TCPPAP_MODERNCPP_STYLE_SOURCES}.s)
 
 add_library(_${OLD_STYLE_EXE}_assembly OBJECT ${TCPPAP_OLD_STYLE_SOURCES})
 set_target_properties(_${OLD_STYLE_EXE}_assembly PROPERTIES COMPILE_FLAGS "-S")
@@ -85,12 +90,8 @@ add_custom_target(${MODERNCPP_STYLE_EXE}_assembly
   COMMAND ${CMAKE_COMMAND} -E copy 
   ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/_${MODERNCPP_STYLE_EXE}_assembly.dir/${TCPPAP_MODERNCPP_STYLE_SOURCES}.o
   ${CMAKE_BINARY_DIR}/${TCPPAP_MODERNCPP_STYLE_SOURCES}.s)
-  
-
-
 
 add_dependencies(assembly_files ${OLD_STYLE_EXE}_assembly ${MODERNCPP_STYLE_EXE}_assembly)
-
 configure_file(${CMAKE_CURRENT_LIST_DIR}/../scripts/bench-result.org.in bench-result.org @ONLY)
   
 

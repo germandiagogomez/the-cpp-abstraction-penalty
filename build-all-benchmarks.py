@@ -15,6 +15,8 @@ ROOT_BUILD_DIR = 'build-all'
 PLOT_FILE_TEMPLATE = 'scripts/plot_data.plt'
 BENCHMARKS_DIR = 'benchmarks'
 PLOTS_DIR = 'plots'
+ASSEMBLY_DIR = 'plots/assembly'
+
 FIELDS_SEP = '--'
 
 
@@ -120,6 +122,17 @@ def copy_plots(plots_source_dir, plots_dest_dir):
             shutil.copyfile(op.join(plots_source_dir, f),
                             op.join(plots_dest_dir, f))
 
+def copy_assembly_files(compilers, assembly_base_dest_dir):
+    for compiler in compilers:
+        assembly_source_dir = 'build-all/build--{}'.format(compiler)
+        assembly_dest_dir = '{}/assembly-{}'.format(ASSEMBLY_DIR, compiler)
+        os.makedirs(assembly_dest_dir)
+        for f in os.listdir(assembly_source_dir):
+            if f.endswith('.s'):
+                shutil.copyfile(op.join(assembly_source_dir, f),
+                                op.join(assembly_dest_dir, f))
+
+
 #TODO: A decent command line
 if __name__ == '__main__':
     if len(sys.argv) != 1:
@@ -132,4 +145,5 @@ if __name__ == '__main__':
     generate_plots(BENCHMARKS_DIR)
     os.makedirs(PLOTS_DIR)
     copy_plots(ROOT_BUILD_DIR, PLOTS_DIR)
-        
+    os.makedirs(ASSEMBLY_DIR)
+    copy_assembly_files(COMPILERS, ASSEMBLY_DIR)
