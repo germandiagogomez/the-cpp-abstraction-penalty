@@ -23,6 +23,9 @@ subdirlist(BENCHMARKS_NAMES ${PROJECT_SOURCE_DIR}/${BENCHMARKS_DIR} [0-9]+.*)
 find_package(PythonInterp REQUIRED)
 find_package(Gnuplot REQUIRED)
 
+add_custom_target(benchmarks)
+add_custom_target(assembly_files)
+
 foreach (BENCHMARK ${BENCHMARKS_NAMES})
   add_subdirectory(${BENCHMARKS_DIR}/${BENCHMARK})
 endforeach(BENCHMARK)

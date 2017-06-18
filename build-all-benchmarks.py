@@ -42,11 +42,11 @@ def run_benchmarks_for_compilers(compilers):
         os.chdir(build_dir)
         retcode = sp.call(['cmake', '-DCMAKE_CXX_COMPILER={}'.format(compiler),
                 '-DTCPPAP_CXX_COMPILER_ID={}'.format(compiler),
-                '../..'])
+                           '../..', '-GNinja'])
         if retcode:
             retcode = sp.call(['cmake', '-DCMAKE_CXX_COMPILER={}'.format(compiler),
                 '-DTCPPAP_CXX_COMPILER_ID={}'.format(compiler),
-                '../../..'])
+                               '../../..', '-GNinja'])
             cmake_src_dir = os.path.abspath('../../..')
             BENCHMARKS_DIR = os.path.join(cmake_src_dir, BENCHMARKS_DIR)
             PLOT_FILE_TEMPLATE = os.path.join(cmake_src_dir, PLOT_FILE_TEMPLATE)
@@ -55,7 +55,8 @@ def run_benchmarks_for_compilers(compilers):
         if retcode:
             raise CMakeException("CMake configuration step failed")
         
-        retcode = sp.call(['cmake', '--build', build_dir])
+        retcode = sp.call(['cmake', '--build', build_dir, '--target', 'benchmarks'])
+        retcode = sp.call(['cmake', '--build', build_dir, '--target', 'assembly_files'])
         if retcode:
             raise CMakeException("Run step failed")
 
