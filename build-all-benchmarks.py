@@ -57,7 +57,7 @@ def run_benchmarks_for_compilers(compilers):
         if retcode:
             raise CMakeException("CMake configuration step failed")
         
-        retcode = sp.call(['cmake', '--build', build_dir, '--target', 'benchmarks'])
+        retcode = sp.call(['cmake', '--build', build_dir, '--target', 'benchmarks', '--', '-j1'])
         retcode = sp.call(['cmake', '--build', build_dir, '--target', 'assembly_files'])
         if retcode:
             raise CMakeException("Run step failed")
