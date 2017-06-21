@@ -6,6 +6,7 @@ set output output_plot
 set grid ytics
 
 set key left
+set offset graph 0.10, 0.10, 0.10, 0.10
 set style fill solid 1.00 border 0
 set style line 1 lc rgb "yellow"
 set style line 2 lc rgb "blue"
