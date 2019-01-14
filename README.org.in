@@ -160,9 +160,8 @@ card =Intel Iris 1536 MB=. My OS is =OSX Yosemite 10.10.1=.
 
 The versions of the compilers used for the benchmarks in my computer are:
 
-   - g++-5 (Homebrew gcc5 5.2.0) 5.2.0.
-   - Apple LLVM version 6.1.0 (clang-602.0.53) (based on LLVM 3.6.0svn)
-     Target: x86_64-apple-darwin14.0.0
-     Thread model: posix.
+   - g++-8 (Homebrew gcc5 5.2.0) 5.2.0.
+   - Apple LLVM version 9.0.0 (clang-900.0.39.2)
+
 
 ** Results
