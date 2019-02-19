@@ -46,7 +46,8 @@ int main(int argc, char * argv[]) {
                                  });
         times.push_back(total_time);
 
-        std::ofstream("do_not_optimize.txt") << res.field1;
+        for (auto v : src_vec)
+        std::ofstream("do_not_optimize.txt") << v.field1;
     }
 
     sort(begin(times), end(times));

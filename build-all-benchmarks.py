@@ -25,11 +25,14 @@ def get_build_dir(compiler):
 
 
 def create_directories_for_compilers(compilers):
-    for compiler in compilers:
-        build_dir = op.join(ROOT_BUILD_DIR, get_build_dir(compiler))
-        os.makedirs(build_dir)
+    for c in compilers:
+        compiler = op.basename(c)
+        build_dir = op.join(ROOT_BUILD_DIR, get_build_dir(op.basename(compiler)))
+        try:
+            os.makedirs(build_dir)
+        except:
+            pass
 
-        
 class CMakeException(RuntimeError):
     pass
 
@@ -37,9 +40,10 @@ class CMakeException(RuntimeError):
 def run_benchmarks_for_compilers(compilers):
     global BENCHMARKS_DIR
     global PLOT_FILE_TEMPLATE
-        
+
     old_working_dir = os.getcwd()
-    for compiler in compilers:
+    for c in compilers:
+        compiler = op.basename(c)
         build_dir = op.join(ROOT_BUILD_DIR, get_build_dir(compiler))
         os.chdir(build_dir)
         retcode = sp.call(['cmake', '-DCMAKE_CXX_COMPILER={}'.format(compiler),
@@ -52,11 +56,11 @@ def run_benchmarks_for_compilers(compilers):
             cmake_src_dir = os.path.abspath('../../..')
             BENCHMARKS_DIR = os.path.join(cmake_src_dir, BENCHMARKS_DIR)
             PLOT_FILE_TEMPLATE = os.path.join(cmake_src_dir, PLOT_FILE_TEMPLATE)
-            
+
         os.chdir(old_working_dir)
         if retcode:
             raise CMakeException("CMake configuration step failed")
-        
+
         retcode = sp.call(['cmake', '--build', build_dir, '--target', 'benchmarks', '--', '-j1'])
         retcode = sp.call(['cmake', '--build', build_dir, '--target', 'assembly_files'])
         if retcode:
@@ -64,7 +68,7 @@ def run_benchmarks_for_compilers(compilers):
 
 
 def generate_benchmark_files(compilers):
-    all_compilers_dirs = (op.join(ROOT_BUILD_DIR, get_build_dir(compiler))
+    all_compilers_dirs = (op.join(ROOT_BUILD_DIR, get_build_dir(op.basename(compiler)))
                                   for compiler in compilers)
     all_dat_files = functools.reduce(it.chain,
                     (glob.iglob(op.join(files_dir, '*.dat')) for
@@ -90,14 +94,14 @@ def generate_benchmark_files(compilers):
                               encoding='utf-8') as bfile:
                         out.write(bfile.read().strip() + ' ')
                 out.write('\n')
-    
-    
+
+
 def generate_plot(benchmark_name):
     benchmark_file = op.join(ROOT_BUILD_DIR, benchmark_name + '.dat')
     output_plot = op.join(ROOT_BUILD_DIR, benchmark_name + '.png')
     benchmark_title = \
         ' '.join(benchmark_name.replace('_', ' ').replace('-', ' ').split(' ')[1:]).capitalize()
-    
+
     plot_command = \
     '''
     gnuplot -e "output_plot='{output_plot}';filename='{benchmark_file}';benchmark_title='{benchmark_title}'" \\
@@ -114,7 +118,7 @@ def generate_plots(root_dir):
         if benchmark_name[0].isdigit():
             generate_plot(benchmark_name)
 
-            
+
 def copy_plots(plots_source_dir, plots_dest_dir):
     for f in os.listdir(plots_source_dir):
         if f[0].isdigit() and \
@@ -123,10 +127,14 @@ def copy_plots(plots_source_dir, plots_dest_dir):
                             op.join(plots_dest_dir, f))
 
 def copy_assembly_files(compilers, assembly_base_dest_dir):
-    for compiler in compilers:
+    for c in compilers:
+        compiler = op.basename(c)
         assembly_source_dir = 'build-all/build--{}'.format(compiler)
         assembly_dest_dir = '{}/assembly-{}'.format(ASSEMBLY_DIR, compiler)
-        os.makedirs(assembly_dest_dir)
+        try:
+            os.makedirs(assembly_dest_dir)
+        except:
+            pass
         for f in os.listdir(assembly_source_dir):
             if f.endswith('.s'):
                 shutil.copyfile(op.join(assembly_source_dir, f),
@@ -137,13 +145,18 @@ def copy_assembly_files(compilers, assembly_base_dest_dir):
 if __name__ == '__main__':
     if len(sys.argv) != 1:
         COMPILERS = sys.argv[1:]
-        
+
     create_directories_for_compilers(COMPILERS)
     run_benchmarks_for_compilers(COMPILERS)
 
     generate_benchmark_files(COMPILERS)
     generate_plots(BENCHMARKS_DIR)
-    os.makedirs(PLOTS_DIR)
+    try:
+        os.makedirs(PLOTS_DIR)
+    except:
+        pass
     copy_plots(ROOT_BUILD_DIR, PLOTS_DIR)
-    os.makedirs(ASSEMBLY_DIR)
-    copy_assembly_files(COMPILERS, ASSEMBLY_DIR)
+    try:
+        os.makedirs(ASSEMBLY_DIR)
+    except:
+        copy_assembly_files(COMPILERS, ASSEMBLY_DIR)
