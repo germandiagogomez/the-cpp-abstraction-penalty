@@ -1,4 +1,4 @@
-benchmark_title = 'FormattedRead'
+benchmark_title = 'MemoryCopy'
 benchmark_name = '03-trivial-type-copy'
 old_cpp_style_sources = 'use_memcpy.cpp'
 modern_cpp_style_sources = 'use_std_copy.cpp'
@@ -9,12 +9,22 @@ program_args = '5'
 old_exe_name = 'old_style-' + benchmark_title
 old_exe = executable(old_exe_name, old_cpp_style_sources,
                         include_directories: inc)
+
+modern_exe_name = 'modern_style-' + benchmark_title
 modern_exe = executable('modern_cpp-' + benchmark_title, modern_cpp_style_sources,
                         include_directories: inc)
 
-run_target('execute-' + old_exe_name,
-    command : [old_exe, program_args],
+times_exe = '5' 
+num_ints = '10000000'
+
+run_target('execute_' + old_exe_name,
+    command : [old_exe, times_exe, num_ints],
     depends : old_exe)
+
+run_target('execute_' + modern_exe_name,
+    command : [modern_exe, times_exe, num_ints],
+    depends : modern_exe)
+
 # add_custom_target(execute_${OLD_STYLE_EXE} 
 #   ${OLD_STYLE_EXE} ${TCPPAP_PROGRAM_ARGS} >> ${CMAKE_BINARY_DIR}/${OLD_STYLE_EXE}.dat
 #   DEPENDS ${OLD_STYLE_EXE} 
