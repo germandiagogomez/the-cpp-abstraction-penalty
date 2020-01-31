@@ -57,8 +57,7 @@ int main(int argc, char * argv[]) {
 
             std::ofstream("do_not_optimize.txt") << res.field1;
         }
-
-        sort(begin(times), end(times));
-        std::cout << times[times.size()/2].count() << ' ';
     }
+    sort(begin(times), end(times));
+    std::cout << times[times.size()/2].count() << ' ';
 }
