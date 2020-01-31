@@ -1,38 +1,43 @@
 #!/usr/bin/env python3
 '''This script is assumed to run from the project root'''
-
 import subprocess as sp
-import functools
 import itertools as it
 import os.path as op
 import os
 import shutil
-import glob
 import sys
 import collections as col
 import json
-from typing import Dict
-from typing import List
 from deepmerge import always_merger
 
+MESON_INTROSPECT = 'meson introspect'
 BUILD_DIR_BASE = 'build-all'
 NATIVE_FILES = ('native-files/msvc2019.txt', 'native-files/msvc2019-2.txt')
 build_dirs = [f'{BUILD_DIR_BASE}/' + op.splitext(op.basename(native_file_name))[0] for native_file_name in NATIVE_FILES]
 config_names = [op.splitext(op.basename(native_file_name))[0] for native_file_name in NATIVE_FILES]
 OUTPUT_DATA_DIR= op.join(BUILD_DIR_BASE, 'bench-results')
 
-def run_command(command, message, verbose=False, raise_error=True):
-    print(f'{message}...', end='', flush=True)
+
+
+def run_command(command, message=None, verbose=False, raise_error=True):
+    if message and not verbose:
+        print(f'{message}...', end='', flush=True)
     result = sp.run(command.split(), capture_output=not verbose)
     if result.returncode != 0:
         print('FAILED')
         if raise_error:
             raise RuntimeError(f'Error: {result.returncode}')
         else:
-            return result.returncode
+            return result
     else:
-        print('OK')
+        if message and not verbose:
+            print('OK')
+    return result
 
+def get_benchmarks_names(build_dir):
+    result = run_command(MESON_INTROSPECT + f' --benchmarks {build_dir}')
+    return iter(set(sorted(t['name'].split('!')[2] for t in json.loads(result.stdout.strip()))))
+    
 
 def configure_meson(native_file_name, build_dir, *, verbose, **kwargs):
     return run_command(f'meson --native-file {native_file_name} ' +
@@ -78,11 +83,13 @@ def write_output_data_file_for_plotting(bench_name, all_benchmarks, config_names
                     str(benchmark_name_results[config_name]['modern_style'])]) + '\n')
 
 #Configure and run all benchmarks
-for i, native_file in enumerate(NATIVE_FILES):
-    configure_meson(native_file, build_dirs[i], verbose=True, raise_error=False)
-    run_benchmarks_for(build_dirs[i], verbose=True)    
+#for i, native_file in enumerate(NATIVE_FILES):
+ #   configure_meson(native_file, build_dirs[i], verbose=True, raise_error=False)
+ #   run_benchmarks_for(build_dirs[i], verbose=True)    
 
 bench_results = rec_defaultdict()
 for i, build_dir in enumerate(build_dirs):
     bench_results = always_merger.merge(bench_results, gather_bench_results_per_benchmark(build_dir, config_names[i]))
-write_output_data_file_for_plotting('trivial-type-copy', bench_results)
+
+for bench_target in get_benchmarks_names(op.join(BUILD_DIR_BASE, config_names[0])):
+    write_output_data_file_for_plotting(bench_target, bench_results)
