@@ -1,0 +1,1 @@
+option('per-benchmark-timeout', type : 'integer', min : 30, max : 120, value : 30)
