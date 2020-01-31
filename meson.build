@@ -11,6 +11,9 @@ foreach bench_dir : benchmarks
 endforeach
 
 plots_dir = meson.source_root() / 'plots'
+prepare_compile_build_dirs = find_program('scripts/prepare_compiler_build_dirs.py')
+run_target('prepare-compiler-build-dirs', 
+            command: [prepare_compile_build_dirs])
 # if (NOT TCPPAP_CXX_COMPILER_ID)
 #   set(TCPPAP_CXX_COMPILER_ID "${CMAKE_CXX_COMPILER_ID}")
 # endif()
