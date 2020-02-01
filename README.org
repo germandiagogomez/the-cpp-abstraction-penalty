@@ -1,6 +1,6 @@
 * Benchmarks
 
-If you just want to see the benchmarks just go to the table here [[#BenchmarksResults][here]]
+If you just want to see the benchmarks just go to the table here [[#Benchmarks-results][here]]
 
 * Purpose
 
@@ -93,9 +93,8 @@ TODO
 
 ** Getting your benchmark to work
 
-* Benchmarks results
 
-BenchmarksResults
+* Benchmarks results
 |-----------------------------------------------------------------|
 |Configuration name| Configuration details  | Benchmarks results  |
 |-----------------------------------------------------------------| 
