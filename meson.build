@@ -10,9 +10,22 @@ foreach bench_dir : benchmarks
     subdir(benchmarks_dir / bench_dir)
 endforeach
 
-# plots_dir = meson.source_root() / 'plots'
 
-pymod = import('python')
+
+#system_info_prog = find_program('scripts/system_info.py')
+#additional_system_info = run_command(system_info_prog)
+
+host_cpp_compiler = meson.get_compiler('cpp')
+host_config = configuration_data({
+    'COMPILER_ID': host_cpp_compiler.get_id(),
+    'LINKER_ID': host_cpp_compiler.get_linker_id(),
+    'SYSTEM': host_machine.system(),
+    'CPU_FAMILY': host_machine.cpu_family(),
+    'CPU_COUNT': 'unknown'
+})
+
+configure_file(input: 'config/configuration_info.md.in',
+output: 'configuration_info.md', configuration: host_config)
 
 # if (NOT TCPPAP_CXX_COMPILER_ID)
 #   set(TCPPAP_CXX_COMPILER_ID "${CMAKE_CXX_COMPILER_ID}")

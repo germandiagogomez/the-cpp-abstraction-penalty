@@ -19,11 +19,9 @@ OUTPUT_DATA_DIR= op.join(BUILD_DIR_BASE, 'bench-results')
 
 
 def configure_meson(native_file_name, build_dir, verbose, **kwargs):
-    print(f'meson --native-file {native_file_name} ' +
-            kwargs.get('meson_setup_options', '') + ' '
-            f'{build_dir}')
-    return run_command(['meson --native-file', f'{native_file_name}'] +
-            kwargs.get('meson_setup_options', '').split(' ') + [f'{build_dir}'],
+    print(f'meson --native-file {native_file_name} ' + f'{build_dir}')
+    return run_command(['meson', '--native-file', f'{native_file_name}'] +
+            [f'{build_dir}'],
             message=f'Configuring build dir for {native_file_name}')
 
 
