@@ -104,7 +104,7 @@ TODO
 |-----------------------------------------------------------------|
 |Configuration name| Configuration details  | Benchmarks results  |
 |-----------------------------------------------------------------|                               
-|[[native-files\configs.txt][configs]] [[native-files\go.txt][go]]|[[.benchmark_results\config_details\configs.txt][configs]] [[.benchmark_results\config_details\go.txt][go]]|
-|[[native-files\here.txt][here]] [[native-files\for-testing.txt][for-testing]]|[[.benchmark_results\config_details\here.txt][here]] [[.benchmark_results\config_details\for-testing.txt][for-testing]]|
-|[[native-files\msvc2019.txt][msvc2019]] [[native-files\msvc2019-2.txt][msvc2019-2]]|[[.benchmark_results\config_details\msvc2019.txt][msvc2019]] [[.benchmark_results\config_details\msvc2019-2.txt][msvc2019-2]]|
-|[[native-files\some.txt][some]] [[native-files\weird.txt][weird]]|[[.benchmark_results\config_details\some.txt][some]] [[.benchmark_results\config_details\weird.txt][weird]]|
+|[[native-files\configs.txt][configs]] [[native-files\go.txt][go]]|[[.benchmark_results\config_details\configs.txt][configs]] [[.benchmark_results\config_details\go.txt][go]]|[[.benchmark_results\configs!go\results.org][Results]]|
+|[[native-files\here.txt][here]] [[native-files\for-testing.txt][for-testing]]|[[.benchmark_results\config_details\here.txt][here]] [[.benchmark_results\config_details\for-testing.txt][for-testing]]|[[.benchmark_results\here!for-testing\results.org][Results]]|
+|[[native-files\msvc2019.txt][msvc2019]] [[native-files\msvc2019-2.txt][msvc2019-2]]|[[.benchmark_results\config_details\msvc2019.txt][msvc2019]] [[.benchmark_results\config_details\msvc2019-2.txt][msvc2019-2]]|[[.benchmark_results\msvc2019!msvc2019-2\results.org][Results]]|
+|[[native-files\some.txt][some]] [[native-files\weird.txt][weird]]|[[.benchmark_results\config_details\some.txt][some]] [[.benchmark_results\config_details\weird.txt][weird]]|[[.benchmark_results\some!weird\results.org][Results]]|
