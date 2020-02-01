@@ -95,7 +95,7 @@ TODO
 
 * Benchmarks results
 
-<<BenchmarksResults>>
+BenchmarksResults
 |-----------------------------------------------------------------|
 |Configuration name| Configuration details  | Benchmarks results  |
 |-----------------------------------------------------------------| 
