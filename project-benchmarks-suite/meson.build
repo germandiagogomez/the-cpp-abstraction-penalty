@@ -17,7 +17,7 @@ if gnuplot_prog.found()
 
     # Copy benchmarks results from build directory
     copy_bench_results_to_this_project_prog = find_program('scripts/copy_benchmarks_results_to_this_project.py')
-    run_target('copy_benchmarks_results_to_this_project',
+    run_target('copy_benchmarks_results',
                command: [copy_bench_results_to_this_project_prog])
 
     # Installation
