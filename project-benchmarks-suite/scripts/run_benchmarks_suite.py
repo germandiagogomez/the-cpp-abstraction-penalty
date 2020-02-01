@@ -11,12 +11,6 @@ from deepmerge import always_merger
 from pathlib import Path
 from util import *
 
-os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))
-NATIVE_FILES = ('native-files/msvc2019.txt', 'native-files/msvc2019-2.txt')
-build_dirs = [op.join(f'{BUILD_DIR_BASE}', op.splitext(op.basename(native_file_name))[0]) for native_file_name in NATIVE_FILES]
-config_names = [op.splitext(op.basename(native_file_name))[0] for native_file_name in NATIVE_FILES]
-OUTPUT_DATA_DIR= op.join(BUILD_DIR_BASE, 'bench-results')
-
 
 def configure_meson(native_file_name, build_dir, verbose, **kwargs):
     print(f'meson --native-file {native_file_name} ' + f'{build_dir}')
@@ -56,7 +50,7 @@ def print_bench_results(bench_results):
             print(f'\tConfig: {config}. Results: {results}')
 
 
-def write_output_data_file_for_plotting(bench_name, all_benchmarks, config_names=config_names, outdir=OUTPUT_DATA_DIR):
+def write_output_data_file_for_plotting(bench_name, all_benchmarks, config_names=CONFIG_NAMES, outdir=OUTPUT_DATA_DIR):
     os.makedirs(outdir, exist_ok=True)
     separator = '|'
     benchmark_name_results = all_benchmarks[bench_name]
@@ -67,29 +61,30 @@ def write_output_data_file_for_plotting(bench_name, all_benchmarks, config_names
                     str(benchmark_name_results[config_name]['modern_style'])]) + '\n')
 
 if __name__ == '__main__':
+    os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))
     if not checkpoint_exists('.configured_done'):
         for i, native_file in enumerate(NATIVE_FILES):
-            configure_meson(native_file, build_dirs[i], verbose=True, raise_error=False)
+            configure_meson(native_file, BUILD_DIRS[i], verbose=True, raise_error=False)
         save_checkpoint('.configured_done')
         print("Configuration done. Checkpoint saved")
 
     start_at = len(NATIVE_FILES)
     for i in range(len(NATIVE_FILES)):
-        if not checkpoint_exists(f'.benchmarks_run_done_{config_names[i]}'):
+        if not checkpoint_exists(f'.benchmarks_run_done_{CONFIG_NAMES[i]}'):
             start_at = i
             break
     
     for i, native_file in enumerate(NATIVE_FILES[start_at:], start_at):
-        run_benchmarks_for(build_dirs[i], verbose=True)    
-        save_checkpoint(f'.benchmarks_run_done_{config_names[i]}')
-        print(f'Done running benchmark suite for {config_names[i]}')
+        run_benchmarks_for(BUILD_DIRS[i], verbose=True)    
+        save_checkpoint(f'.benchmarks_run_done_{CONFIG_NAMES[i]}')
+        print(f'Done running benchmark suite for {CONFIG_NAMES[i]}')
     
     if not checkpoint_exists('.plot_data_generated_done'):
         bench_results = rec_defaultdict()
-        for i, build_dir in enumerate(build_dirs):
-            bench_results = always_merger.merge(bench_results, gather_bench_results_per_benchmark(build_dir, config_names[i]))
+        for i, build_dir in enumerate(BUILD_DIRS):
+            bench_results = always_merger.merge(bench_results, gather_bench_results_per_benchmark(build_dir, CONFIG_NAMES[i]))
         
-        for bench_target in get_benchmarks_names(op.join(BUILD_DIR_BASE, config_names[0])):
+        for bench_target in get_benchmarks_names(op.join(BUILD_DIR_BASE, CONFIG_NAMES[0])):
             print(bench_target)
             write_output_data_file_for_plotting(bench_target, bench_results)
         save_checkpoint('.plot_data_generated_done')

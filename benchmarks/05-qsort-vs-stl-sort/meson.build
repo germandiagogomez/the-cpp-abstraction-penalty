@@ -19,7 +19,7 @@ modern_exe = executable(modern_exe_name, modern_cpp_style_sources,
 
 # Number of executions and size of benchmark
 times_exe = '5' 
-bench_size = '10000000'
+bench_size = '1000000'
 
 
 # Benchmark targets
