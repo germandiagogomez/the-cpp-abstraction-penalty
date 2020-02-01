@@ -1,3 +1,7 @@
+* Benchmarks
+
+If you just want to see the benchmarks just go to the table here [[BenchmarksResults][here]]
+
 * Purpose
 
 This is a set of benchmarks in C++ that tries
@@ -6,8 +10,7 @@ implementations vs "library-based, modern C++"
 implementations of some algorithms and compares
 their execution time.
 
-For every benchmark,
-two implementations are introduced:
+For every benchmark, two implementations are introduced:
 
 - raw implementation.
 - modern C++ implementation.
@@ -57,20 +60,24 @@ So you want to run the benchmark yourself in your computer...
 
 Prerequisites:
 
-- python 3 (though currently cmake is looking for python 2!).
-- gnuplot.
-- compilers to run the benchmarks against (only tested g++ and clang++ in OS X at this time).
+- Meson build system : https://mesonbuild.com/Getting-meson.html
+- gnuplot if you want to be able to generate the plots for the benchmarks
+- compilers to run the benchmarks against
 
-NOTE: Not tested in Visual Studio compiler yet, but it should work.
 
 #+BEGIN_src sh
-git clone https://github.com/germandiagogomez/the-cpp-abstraction-penalty.git
+git clone --recursive https://github.com/germandiagogomez/the-cpp-abstraction-penalty.git
 cd the-cpp-abstraction-penalty
-git submodule init
-git submodule update
 
-#Example ./build-all-benchmarks.py clang++ g++
-./build-all-benchmarks.py [compiler-exes]
+# Configure the superproject that will run the benchmarks suite
+meson project-benchmarks-suite build-benchmarks-suite
+
+# Run the benchmarks
+ninja -C build-benchmarks-suite run_benchmarks_suite
+
+# Generate the plots in directory build-all/plots (requires gnuplot)
+ninja -C build-benchmarks-suite generate_plots
+
 #+END_src
 
 This will do the following:
@@ -78,90 +85,20 @@ This will do the following:
  1. Build the binaries for your compilers.
  2. Run the binaries for the benchmark.
  3. Put, for each benchmark, a png file in
-    build-all directory that you can merrily open when done to
-    see the chart.
-
-*WARNING*: Only tested on my Mac OSX computer.
+    build-all/plots directory that you can open when done to see the chart.
 
 * How to contribute a new benchmark
 
-Your benchmark must return the number of milliseconds that
-took for it to execute as an integer number. The provided
-benchmarks return the median of 5 executions, so
-for now I recomend to just do this. There is a utility file
-in =benchmarks/util= that you can
-use for timing.
-
-
-NOTE: Maybe I will take a more scientific look at how to achieve
-more accurate results in the future, but this will suffice
-for now.
+TODO
 
 ** Getting your benchmark to work
 
-  1. Create a directory for your benchmark in
-     =benchmarks/your-benchmark-directory=.
-  2. Use a template like the one below for your CMakeLists.txt in
-     the newly created directory:
-
-#+BEGIN_src
-if (UNIX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} -std=c++14")
-endif()
-
-set(TCPPAP_BENCHMARK_TITLE "Title for benchmark")
-set(TCPPAP_BENCHMARK_NAME <dir-name-for-benchmark>)
-set(TCPPAP_BENCHMARK_NAME my-benchmark-name)
-set(TCPPAP_OLD_STYLE_SOURCES my_file1.cpp ...)
-set(TCPPAP_MODERNCPP_STYLE_SOURCES my_modern_file1.cpp ...)
-
-#Example benchmark parameters
-set(TCPPAP_PROGRAM_ARGS 5 10000000)
-
-include(MakeBenchmark)
-#+END_src
-
-  3. Take a look at the provided main function examples
-     for inspiration if needed, such as [[./benchmarks/01-sieve/ranges_sieve.cpp][Sieve]].
-
-  4. Fork the repo and create a branch for working on your benchmark.
-
-  5. When done, just send a pull request. I will try to take
-     a look, mainly at weekends due to my workload. :)
-
-** Variables reference
-|---------------------------------+--------------------------------------------------------------------------|
-| Read-only variable              | Meaning                                                                  |
-|---------------------------------+--------------------------------------------------------------------------|
-| TCPPAP_BENCHMARKS_DIR           | Directory where benchmarks hang from.                                    |
-| TCPPAP_MODULES_DIR              | Submodules directory for any dependencies for benchmarks.                |
-|---------------------------------+--------------------------------------------------------------------------|
-
-|---------------------------------+--------------------------------------------------------------------------|
-| User variable                   | Meaning                                                                  |
-|---------------------------------+--------------------------------------------------------------------------|
-| TCPPAP_BENCHMARK_TITLE          | Free form title such as "std::memcpy vs std::copy"                       |
-| TCPPAP_BENCHMARK_NAME           | This is the benchmark name, which must match the directory name          |
-| TCPPAP_MODERNCPP_STYLE_SOURCES  | Source files for modern benchmark executable.                            |
-| TCPPAP_MODERNCPP_STYLE_INCLUDES | Use for include directories for only modern style benchmark exe.         |
-| TCPPAP_OLD_STYLE_SOURCES        | Source files for old benchmark executable.                               |
-| TCPPAP_OLD_STYLE_INCLUDES       | Use for include directories for only old style benchmark exe.            |
-| TCPPAP_INCLUDES                 | Use for include directories for both modern and old style benchmark exe. |
-| TCPPAP_PROGRAM_ARGS             | Arguments passed to the benchmark programs when running                  |
-|---------------------------------+--------------------------------------------------------------------------|
-
 * Benchmarks results
 
-** Hardware information
+<<BenchmarksResults>>
+|-----------------------------------------------------------------|
+|Configuration name| Configuration details  | Benchmarks results  |
+|-----------------------------------------------------------------| 
+| blabla           |  aqui                  | aca                 |                                 
+|-----------------------------------------------------------------|
 
-I am using a =2,4 GHz Intel Core i5 4 GB 1600 MHz DDR3= with graphics
-card =Intel Iris 1536 MB=. My OS is =OSX Yosemite 10.10.1=.
-
-
-The versions of the compilers used for the benchmarks in my computer are:
-
-   - g++-8 (Homebrew gcc5 5.2.0) 5.2.0.
-   - Apple LLVM version 9.0.0 (clang-900.0.39.2)
-
-
-** Results

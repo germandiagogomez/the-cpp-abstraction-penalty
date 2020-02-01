@@ -1,0 +1,8 @@
+### Host machine information
+
+- OS: @SYSTEM@
+- CPU family: @CPU_FAMILY@
+- Compiler: @COMPILER_ID@
+- Linker: @LINKER_ID@
+- Number of cores: @CPU_COUNT@
+
