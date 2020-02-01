@@ -39,18 +39,24 @@ I want to show how typical, older-style or C-ish code
 or old-style C++ code
 performs against idiomatic modern C++ code.
 
-I want to limit the benchmarks to code that is easy to
-write for the average programmer, things that would be
-likely to be written in the wild as a normal
-attemp to perform an action, that look simple.
+I want to limit the benchmarks to code to focus
+on older vs newer styles. One benchmarks should represent
+and older way of doing something, and the modern one
+should represent the supposedly better, as in safer or
+more idiomatic way of doing something compared to the 
+previous benchmark.
 
-For example, if there is an I/O benchmark of C I/O vs C++ I/O,
-I consider cheating to start to mess up with buffers and locales
-and advanced tricks to improve performance, because
-this is not what a normal programmer would write as a first attemp.
+It will be considered cheating to write unconventional and deeply
+worked out code in the benchmarks just to beat one benchmark against
+another. For example, using carefully-crafted SSE intrinsics is
+not something acceptable. Using `std::myalgo(my_policy, beg, end)`
+is not cheating, because it is easy to write even if internally
+could use SSE or OpenMP.
 
-Contributions will be accepted.
+Contributions are welcome.
+
 Suggestions and ideas for new benchmarks are welcome as well.
+
 I will reserve for myself the right to accept or reject a benchmark
 to the set of benchmarks, with the hope of keeping it focused. :).
 
@@ -100,4 +106,4 @@ TODO
 |-----------------------------------------------------------------| 
 | blabla           |  aqui                  | aca                 |                                 
 |-----------------------------------------------------------------|
-
+|[[native-files\msvc2019.txt][msvc2019]],[[native-files\msvc2019-2.txt][msvc2019-2]]|[[.benchmark_results\config_details\msvc2019.txt][msvc2019]], [[.benchmark_results\config_details\msvc2019-2.txt][msvc2019-2]]|Results|
