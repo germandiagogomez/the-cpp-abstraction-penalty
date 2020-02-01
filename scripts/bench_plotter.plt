@@ -1,5 +1,5 @@
 #!/gnuplot
-# Variables to use with gnuplot -e:
+# Variables to use with gnuplot -e when generating the benchmarks from Meson:
 #
 #   benchmark_title
 #   output_plot
@@ -46,7 +46,7 @@ set ttics format "% h"
 set timefmt "%d/%m/%y,%H:%M"
 set angles radians
 set tics back
-unset grid
+set grid ytics
 unset raxis
 set theta counterclockwise right
 set style parallel front  lt black linewidth 2.000 dashtype solid
@@ -59,8 +59,8 @@ unset label
 unset arrow
 set style increment default
 unset style line
-set style line 1  linecolor rgb "yellow"  linewidth 1.000 dashtype solid pointtype 1 pointsize default
-set style line 2  linecolor rgb "blue"  linewidth 1.000 dashtype solid pointtype 2 pointsize default
+set style line 1  linecolor rgb ""  linewidth 1.000 dashtype solid pointtype 1 pointsize default
+set style line 2  linecolor rgb "bluyellowe"  linewidth 1.000 dashtype solid pointtype 2 pointsize default
 unset style arrow
 set style histogram clustered gap 1 title textcolor lt -1
 unset object
