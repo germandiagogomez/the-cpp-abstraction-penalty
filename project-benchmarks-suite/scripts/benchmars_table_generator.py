@@ -6,13 +6,7 @@ import itertools as it
 import os.path as op
 import shutil 
 
-class BenchmarksResultsAlreadyGenerated(Exception):
-    pass
-
-# FINAL_OUTPUT_DIR_BASE
-# BUILD_OUTPUT_DIR_BASE
-
-BENCHMARKS_ALREADY_GENERATED_FILE = op.join(BUILD_OUTPUT_DIR_BASE, '.benchmarks_already_generated')
+BENCHMARKS_ALREADY_INSTALLED_FILE = op.join(BUILD_OUTPUT_DIR_BASE, '.benchmarks_already_installed')
 
 class BenchmarksTableGenerator:
     def __init__(self, config_names: List[str]):
@@ -25,9 +19,9 @@ class BenchmarksTableGenerator:
     @staticmethod
     def _get_existing_config_names():
         try:
-            shutil.copy(op.join(FINAL_OUTPUT_DIR_BASE, '.benchmarks_already_generated'),
-                        BENCHMARKS_ALREADY_GENERATED_FILE)
-            with open(BENCHMARKS_ALREADY_GENERATED_FILE, 'r') as f:
+            shutil.copy(op.join(FINAL_OUTPUT_DIR_BASE, '.benchmarks_already_installed'),
+                        BENCHMARKS_ALREADY_INSTALLED_FILE)
+            with open(BENCHMARKS_ALREADY_INSTALLED_FILE, 'r') as f:
                 return [tuple(line.strip().split('!')) for line in f]
         except FileNotFoundError:
             return []
@@ -35,7 +29,7 @@ class BenchmarksTableGenerator:
     @staticmethod
     def _benchmarks_results_exist_for_configs_combination(config_names):
         try:
-            with open(BENCHMARKS_ALREADY_GENERATED_FILE, 'r') as f:
+            with open(BENCHMARKS_ALREADY_INSTALLED_FILE, 'r') as f:
                 for line in f:
                     if line.strip() == '!'.join(config_names):
                         return True
@@ -82,7 +76,7 @@ class BenchmarksTableGenerator:
             for config_pair in config_pairs:
                 table_rows.append(BenchmarksTableGenerator._generate_org_entry(config_pair))
             
-            with open(BENCHMARKS_ALREADY_GENERATED_FILE, 'w') as already_gen_f:
+            with open(BENCHMARKS_ALREADY_INSTALLED_FILE, 'w') as already_gen_f:
                 for config_pair in config_pairs:
                     already_gen_f.write('!'.join(config_pair))
             return '\n'.join(table_rows)
