@@ -1,6 +1,6 @@
 * Benchmarks
 
-If you just want to see the benchmarks just go to the table here [[BenchmarksResults][here]]
+If you just want to see the benchmarks just go to the table here [[#BenchmarksResults][here]]
 
 * Purpose
 
