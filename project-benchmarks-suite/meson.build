@@ -10,14 +10,14 @@ run_target('run_benchmarks_suite',
             command: [run_benchmarks_suite_prog])
 
 if gnuplot_prog.found()
-    run_target('generate_plots', 
+    run_target('generate_plots',
             command: [generate_plots, gnuplot_prog.path()])
     generate_org_table_prog = find_program('scripts/benchmars_table_generator.py')
     run_target('generate_readme_org', command: [generate_org_table_prog])
 
     # Copy benchmarks results from build directory
     copy_bench_results_to_this_project_prog = find_program('scripts/copy_benchmarks_results_to_this_project.py')
-    run_target('copy_benchmarks_results',
+    run_target('stage_benchmarks_results',
                command: [copy_bench_results_to_this_project_prog])
 
     # Installation
@@ -27,4 +27,3 @@ if gnuplot_prog.found()
 else
     message('gnuplot not found. Target generate_plots will not be added.')
 endif
-

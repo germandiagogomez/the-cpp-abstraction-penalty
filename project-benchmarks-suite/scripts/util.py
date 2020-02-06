@@ -13,14 +13,16 @@ def get_build_dir_for_config(config_name):
 MESONINTROSPECT = ['meson', 'introspect']
 BUILD_DIR_BASE = 'build-all'
 MESON_SOURCE_ROOT = os.environ['MESON_SOURCE_ROOT']
-NATIVE_FILES_DIR = 'native-files'
-NATIVE_FILES = (op.join(NATIVE_FILES_DIR, 'msvc2019.txt'), op.join(NATIVE_FILES_DIR, 'msvc2019-2.txt'))
+NATIVE_FILES_DIR = '../native-files'
+NATIVE_FILES = (op.join(NATIVE_FILES_DIR, 'default-gcc.txt'), op.join(NATIVE_FILES_DIR, 'default-clang.txt'))
 CONFIG_NAMES = [op.splitext(op.basename(native_file_name))[0] for native_file_name in NATIVE_FILES]
 BUILD_DIRS = [get_build_dir_for_config(config_name) for config_name in CONFIG_NAMES]
 OUTPUT_DATA_DIR = op.join(BUILD_DIR_BASE, 'bench-results')
 BUILD_OUTPUT_DIR_BASE = op.join(BUILD_DIR_BASE, '.benchmarks_results')
 FINAL_OUTPUT_DIR_BASE = '.benchmarks_results'
 
+PROJECT_BENCHMARKS_SUITE_BUILD_DIR_BASE = os.environ['MESON_BUILD_ROOT']
+SUB_MESON_SOURCE_ROOT = op.join(os.environ['MESON_SOURCE_ROOT'], '..')
 
 def run_command(command, message=None, verbose=False, raise_error=True):
     if message and not verbose:
@@ -31,7 +33,7 @@ def run_command(command, message=None, verbose=False, raise_error=True):
     if result.returncode != 0:
         print('FAILED')
         if raise_error:
-            raise RuntimeError(f'Error: {result.returncode}')
+            raise RuntimeError(f'Error: {result.returncode} -> {result.stdout} - {result.stderr}')
         else:
             return result
     else:
@@ -58,4 +60,4 @@ def get_native_file_for_config(config_name):
 
 
 def generate_org_link(link, display=None):
-    return f'[[{link}]' + (f'[{display}]' if display is not None else '') + ']' 
+    return f'[[{link}]' + (f'[{display}]' if display is not None else '') + ']'

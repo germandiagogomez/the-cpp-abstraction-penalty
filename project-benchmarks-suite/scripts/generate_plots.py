@@ -8,12 +8,12 @@ import json
 from pathlib import Path
 from util import *
 
-os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))
+os.chdir(PROJECT_BENCHMARKS_SUITE_BUILD_DIR_BASE)
 
 GNUPLOT = sys.argv[1]
 PLOTS_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES), 'plots')
 RESULTS_ORG_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES))
-NATIVE_FILES = ('native-files/msvc2019.txt', 'native-files/msvc2019-2.txt')
+NATIVE_FILES = ('../native-files/default-gcc.txt', '../native-files/default-clang.txt')
 CONFIG_NAMES = [op.splitext(op.basename(native_file_name))[0] for native_file_name in NATIVE_FILES]
 FINAL_PLOTS_DIR = op.join(FINAL_OUTPUT_DIR_BASE, 'plots')
 
@@ -25,7 +25,7 @@ def generate_plot(benchmark_name, **kwargs):
     bench_plotter = op.join(MESON_SOURCE_ROOT, 'scripts', 'bench_plotter.plt')
     command = [f'{GNUPLOT}', '-e', f"filename='{filename}';output_plot='{png_file}';benchmark_title='{benchmark_title}'", bench_plotter]
     result = run_command(command, **kwargs)
-
+    return result
 
 # - Sieve
 #    - [[benchmarks/01-sieve/raw_sieve.cpp]] -> [[plots/assembly/assembly-clang++/raw_sieve.cpp.s]]
@@ -51,7 +51,7 @@ def generate_org_benchmark_result(benchmark_name):
 if not checkpoint_exists('.plots_generated'):
     bench_results = []
     for benchmark_name in get_benchmarks_names(op.join(BUILD_DIR_BASE, CONFIG_NAMES[0])):
-        generate_plot(benchmark_name) 
+        generate_plot(benchmark_name)
         bench_results.append(generate_org_benchmark_result(benchmark_name))
 
     config_folder = '!'.join(CONFIG_NAMES)

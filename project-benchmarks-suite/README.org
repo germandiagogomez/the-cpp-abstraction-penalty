@@ -106,4 +106,4 @@ TODO
 |-----------------------------------------------------------------
 | Configuration files | Configuration details |Benchmark results |
 |-----------------------------------------------------------------
-|[[native-files\msvc2019.txt][msvc2019]] [[native-files\msvc2019-2.txt][msvc2019-2]]|[[.benchmarks_results\config_details\msvc2019.txt][msvc2019]] [[.benchmarks_results\config_details\msvc2019-2.txt][msvc2019-2]]|[[.benchmarks_results\msvc2019!msvc2019-2\results.org][Results]]|
+|[[../native-files/default-gcc.txt][default-gcc]] [[../native-files/default-clang.txt][default-clang]]|[[.benchmarks_results/config_details/default-gcc.txt][default-gcc]] [[.benchmarks_results/config_details/default-clang.txt][default-clang]]|[[.benchmarks_results/default-gcc!default-clang/results.org][Results]]|

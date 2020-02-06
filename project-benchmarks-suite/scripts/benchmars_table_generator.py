@@ -4,7 +4,7 @@ from util import *
 from typing import List
 import itertools as it
 import os.path as op
-import shutil 
+import shutil
 
 BENCHMARKS_ALREADY_INSTALLED_FILE = op.join(BUILD_OUTPUT_DIR_BASE, '.benchmarks_already_installed')
 
@@ -40,7 +40,7 @@ class BenchmarksTableGenerator:
     def _generate_org_link(link, display):
         return f'[[{link}][{display}]]'
 
-    @staticmethod 
+    @staticmethod
     def _generate_configuration_host_details_entry(config_name):
         config_file_detail_link = op.join(FINAL_OUTPUT_DIR_BASE, 'config_details', config_name + '.txt')
         display = config_name
@@ -54,7 +54,7 @@ class BenchmarksTableGenerator:
 
     @staticmethod
     def _generate_configuration_file_entry(config_name):
-        config_file_link = get_native_file_for_config(config_name) 
+        config_file_link = get_native_file_for_config(config_name)
         user_display = config_name
         return BenchmarksTableGenerator._generate_org_link(config_file_link, user_display)
 
@@ -68,14 +68,14 @@ class BenchmarksTableGenerator:
         configuration_hosts_details = ' '.join(configuration_hosts_details_list)
         return '|' + '|'.join([configuration_files, configuration_hosts_details]) + '|' + bench_results + '|'
 
-    
+
     def update_org_table(self):
         table_rows = []
         if self._can_generate_new_table:
             config_pairs = sorted(it.chain(self._existing_config_names, [self.config_names]), key=lambda e: e[0] + '!' + e[1])
             for config_pair in config_pairs:
                 table_rows.append(BenchmarksTableGenerator._generate_org_entry(config_pair))
-            
+
             with open(BENCHMARKS_ALREADY_INSTALLED_FILE, 'w') as already_gen_f:
                 for config_pair in config_pairs:
                     already_gen_f.write('!'.join(config_pair))
@@ -86,11 +86,10 @@ class BenchmarksTableGenerator:
             return '\n'.join(table_rows)
 
 if __name__ == '__main__':
-    os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))
+    os.chdir(PROJECT_BENCHMARKS_SUITE_BUILD_DIR_BASE)
     table_gen = BenchmarksTableGenerator(CONFIG_NAMES)
     new_table = table_gen.update_org_table()
     with open(op.join(MESON_SOURCE_ROOT, 'README.org.in'), 'r') as in_file:
         with open(op.join(MESON_SOURCE_ROOT, 'README.org'), 'w') as out_file:
             out_file.write(''.join(in_file.readlines()))
             out_file.write(new_table)
-

@@ -160,7 +160,6 @@ set lmargin  -1
 set bmargin  -1
 set rmargin  -1
 set tmargin  -1
-set locale "English_United States.1252"
 set pm3d explicit at s
 set pm3d scansautomatic
 set pm3d interpolate 1,1 flush begin noftriangles noborder corners2color mean
