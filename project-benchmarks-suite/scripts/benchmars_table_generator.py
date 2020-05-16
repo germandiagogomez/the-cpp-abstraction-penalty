@@ -42,7 +42,7 @@ class BenchmarksTableGenerator:
 
     @staticmethod 
     def _generate_configuration_host_details_entry(config_name):
-        config_file_detail_link = op.join(FINAL_OUTPUT_DIR_BASE, 'config_details', config_name + '.txt')
+        config_file_detail_link = op.join(FINAL_OUTPUT_DIR_BASE, 'config_details', config_name + '.md')
         display = config_name
         return BenchmarksTableGenerator._generate_org_link(config_file_detail_link, display)
 

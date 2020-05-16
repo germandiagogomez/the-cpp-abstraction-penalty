@@ -106,4 +106,5 @@ TODO
 |-----------------------------------------------------------------
 | Configuration files | Configuration details |Benchmark results |
 |-----------------------------------------------------------------
-|[[native-files/gcc.txt][gcc]] [[native-files/clang.txt][clang]]|[[.benchmarks_results/config_details/gcc.txt][gcc]] [[.benchmarks_results/config_details/clang.txt][clang]]|[[.benchmarks_results/gcc!clang/results.org][Results]]|
+|[[native-files/gcc.txt][gcc]] [[native-files/clang.txt][clang]]|[[.benchmarks_results/config_details/gcc.md][gcc]] [[.benchmarks_results/config_details/clang.md][clang]]|[[.benchmarks_results/gcc!clang/results.org][Results]]|
+|[[native-files/gcc.txt][gcc]] [[native-files/clang.txt][clang]]|[[.benchmarks_results/config_details/gcc.md][gcc]] [[.benchmarks_results/config_details/clang.md][clang]]|[[.benchmarks_results/gcc!clang/results.org][Results]]|

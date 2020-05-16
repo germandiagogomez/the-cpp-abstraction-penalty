@@ -3,6 +3,6 @@
 - OS: @SYSTEM@
 - CPU family: @CPU_FAMILY@
 - Compiler: @COMPILER_ID@
+- Version: @COMPILER_VERSION@
 - Linker: @LINKER_ID@
 - Number of cores: @CPU_COUNT@
-
