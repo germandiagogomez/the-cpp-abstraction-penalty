@@ -93,4 +93,4 @@ if __name__ == '__main__':
         with open(op.join(MESON_SOURCE_ROOT, 'README.org'), 'w') as out_file:
             out_file.write(''.join(in_file.readlines()))
             out_file.write(new_table)
-
+            print(new_table)
