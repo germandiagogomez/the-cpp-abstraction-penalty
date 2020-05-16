@@ -58,4 +58,5 @@ def get_native_file_for_config(config_name):
 
 
 def generate_org_link(link, display=None):
-    return f'[[{link}]' + (f'[{display}]' if display is not None else '') + ']' 
+    encoded_link = link.replace('!', '%21')
+    return f'[[{encoded_link}]' + (f'[{display}]' if display is not None else '') + ']' 

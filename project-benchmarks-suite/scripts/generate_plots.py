@@ -41,9 +41,8 @@ def generate_org_benchmark_result(benchmark_name):
     benchmark_title = benchmark_name.replace('-', ' ').replace('_', ' ').capitalize()
     config_folder = '!'.join(CONFIG_NAMES)
     final_plots_dir = op.join(GITHUB_URL, FINAL_OUTPUT_DIR_BASE, f'{config_folder}/plots')
-    benchmark_link = Path(final_plots_dir) / (benchmark_name + '.png')
-    org_link = generate_org_link(str(benchmark_link))
-    print(org_link)
+    benchmark_link = final_plots_dir + '/' + benchmark_name + '.png'
+    org_link = generate_org_link(benchmark_link)
     return ''.join([' - ' + benchmark_title, '\n',
                     f'{org_link}'
                     ])

@@ -1,17 +1,17 @@
- - Trivial type copy
-[[https:/github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/.benchmarks_results/gcc!clang/plots/trivial-type-copy.png]]
-
  - Qsort vs stl sort
-[[https:/github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/.benchmarks_results/gcc!clang/plots/qsort-vs-stl-sort.png]]
+[[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/.benchmarks_results/gcc%21clang/plots/qsort-vs-stl-sort.png]]
 
- - Memset vs fill
-[[https:/github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/.benchmarks_results/gcc!clang/plots/memset-vs-fill.png]]
-
- - Non trivial type copy
-[[https:/github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/.benchmarks_results/gcc!clang/plots/non-trivial-type-copy.png]]
+ - Trivial type copy
+[[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/.benchmarks_results/gcc%21clang/plots/trivial-type-copy.png]]
 
  - Memcmp vs equal
-[[https:/github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/.benchmarks_results/gcc!clang/plots/memcmp-vs-equal.png]]
+[[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/.benchmarks_results/gcc%21clang/plots/memcmp-vs-equal.png]]
+
+ - Memset vs fill
+[[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/.benchmarks_results/gcc%21clang/plots/memset-vs-fill.png]]
 
  - Formatted read
-[[https:/github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/.benchmarks_results/gcc!clang/plots/formatted-read.png]]
+[[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/.benchmarks_results/gcc%21clang/plots/formatted-read.png]]
+
+ - Non trivial type copy
+[[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/.benchmarks_results/gcc%21clang/plots/non-trivial-type-copy.png]]
