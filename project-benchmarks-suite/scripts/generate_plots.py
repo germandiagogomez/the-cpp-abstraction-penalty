@@ -15,8 +15,6 @@ PLOTS_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES
 RESULTS_ORG_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES))
 NATIVE_FILES = ('native-files/gcc.txt', 'native-files/clang.txt')
 CONFIG_NAMES = [op.splitext(op.basename(native_file_name))[0] for native_file_name in NATIVE_FILES]
-FINAL_PLOTS_DIR = op.join(GITHUB_URL, FINAL_OUTPUT_DIR_BASE, 'plots')
-
 
 def generate_plot(benchmark_name, **kwargs):
     os.makedirs(PLOTS_DIR, exist_ok=True)
@@ -26,7 +24,6 @@ def generate_plot(benchmark_name, **kwargs):
     png_file = op.join(PLOTS_DIR, benchmark_name) + '.png'
     bench_plotter = op.join(MESON_SOURCE_ROOT, 'scripts', 'bench_plotter.plt')
     command = [f'{GNUPLOT}', '-e', f"filename='{filename}';output_plot='{png_file}';benchmark_title='{benchmark_title}'", bench_plotter]
-    print(command)
     result = run_command(command, **kwargs)
 
 # - Sieve
@@ -43,7 +40,10 @@ def generate_plot(benchmark_name, **kwargs):
 def generate_org_benchmark_result(benchmark_name):
     benchmark_title = benchmark_name.replace('-', ' ').replace('_', ' ').capitalize()
     config_folder = '!'.join(CONFIG_NAMES)
-    org_link = generate_org_link(op.join(f'{FINAL_PLOTS_DIR}', f'{config_folder}', benchmark_name + '.png'))
+    final_plots_dir = op.join(GITHUB_URL, FINAL_OUTPUT_DIR_BASE, f'{config_folder}/plots')
+    benchmark_link = Path(final_plots_dir) / (benchmark_name + '.png')
+    org_link = generate_org_link(str(benchmark_link))
+    print(org_link)
     return ''.join([' - ' + benchmark_title, '\n',
                     f'{org_link}'
                     ])
