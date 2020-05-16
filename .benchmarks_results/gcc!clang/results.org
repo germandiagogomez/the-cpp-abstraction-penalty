@@ -1,5 +1,5 @@
  - Qsort vs stl sort
-[[/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/.benchmarks_results/gcc!clang/plots/qsort-vs-stl-sort.png]]
+[[plots/qsort-vs-stl-sort.png]]
 
  - Formatted read
 [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/.benchmarks_results/gcc%21clang/plots/formatted-read.png]]
