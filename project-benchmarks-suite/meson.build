@@ -4,27 +4,39 @@ run_benchmarks_suite_prog = find_program('scripts/run_benchmarks_suite.py')
 generate_plots = find_program('scripts/generate_plots.py')
 
 gnuplot_prog = find_program(['gnuplot', 'C:/Program Files/gnuplot/bin/gnuplot'],
-            required: false)
+                            required: false)
+
+github_base_project_url = 'https://github.com/germandiagogomez/the-cpp-abstraction-penalty'
+
 
 run_target('run_benchmarks_suite',
-            command: [run_benchmarks_suite_prog])
+           command: [run_benchmarks_suite_prog])
 
 if gnuplot_prog.found()
-    run_target('generate_plots', 
-            command: [generate_plots, gnuplot_prog.path()])
-    generate_org_table_prog = find_program('scripts/benchmars_table_generator.py')
-    run_target('generate_readme_org', command: [generate_org_table_prog])
+  git_prog = find_program('git')
 
-    # Copy benchmarks results from build directory
-    copy_bench_results_to_this_project_prog = find_program('scripts/copy_benchmarks_results_to_this_project.py')
-    run_target('copy_benchmarks_results',
-               command: [copy_bench_results_to_this_project_prog])
+  git_current_branch = run_command(git_prog, 'branch', '--show-current', check: true).stdout().strip()
 
-    # Installation
-    install_data('README.org',
-             install_dir : meson.source_root() / '..')
-    install_subdir('.benchmarks_results', install_dir: meson.source_root() / '..')
+  if git_current_branch == 'master'
+    github_url = github_base_project_url / git_current_branch
+  else
+    github_url = github_base_project_url / 'tree' / git_current_branch
+  endif
+  run_target('generate_plots',
+             command: [generate_plots, gnuplot_prog.path(), github_url])
+  
+  generate_org_table_prog = find_program('scripts/benchmars_table_generator.py')
+  run_target('generate_readme_org', command: [generate_org_table_prog])
+
+  # Copy benchmarks results from build directory
+  copy_bench_results_to_this_project_prog = find_program('scripts/copy_benchmarks_results_to_this_project.py')
+  run_target('copy_benchmarks_results',
+             command: [copy_bench_results_to_this_project_prog])
+
+  # Installation
+  install_data('README.org',
+               install_dir : meson.source_root() / '..')
+  install_subdir('.benchmarks_results', install_dir: meson.source_root() / '..')
 else
-    message('gnuplot not found. Target generate_plots will not be added.')
+  warning('gnuplot not found. Target generate_plots will not be added.')
 endif
-
