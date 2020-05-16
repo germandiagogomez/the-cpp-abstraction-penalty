@@ -1,17 +1,17 @@
  - Memcmp vs equal
 [[plots/memcmp-vs-equal.png]]
 
- - Non trivial type copy
-[[plots/non-trivial-type-copy.png]]
-
- - Trivial type copy
-[[plots/trivial-type-copy.png]]
-
  - Qsort vs stl sort
 [[plots/qsort-vs-stl-sort.png]]
+
+ - Non trivial type copy
+[[plots/non-trivial-type-copy.png]]
 
  - Formatted read
 [[plots/formatted-read.png]]
 
  - Memset vs fill
 [[plots/memset-vs-fill.png]]
+
+ - Trivial type copy
+[[plots/trivial-type-copy.png]]
