@@ -10,7 +10,6 @@ from util import *
 
 os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))
 GNUPLOT = sys.argv[1]
-GITHUB_URL = sys.argv[2]
 PLOTS_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES), 'plots')
 RESULTS_ORG_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES))
 NATIVE_FILES = ('native-files/gcc.txt', 'native-files/clang.txt')
@@ -40,7 +39,7 @@ def generate_plot(benchmark_name, **kwargs):
 def generate_org_benchmark_result(benchmark_name):
     benchmark_title = benchmark_name.replace('-', ' ').replace('_', ' ').capitalize()
     config_folder = '!'.join(CONFIG_NAMES)
-    final_plots_dir = op.join(GITHUB_URL, FINAL_OUTPUT_DIR_BASE, f'{config_folder}/plots')
+    final_plots_dir = 'plots'
     benchmark_link = final_plots_dir + '/' + benchmark_name + '.png'
     org_link = generate_org_link(benchmark_link)
     return ''.join([' - ' + benchmark_title, '\n',

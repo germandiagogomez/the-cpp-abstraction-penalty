@@ -6,9 +6,6 @@ generate_plots = find_program('scripts/generate_plots.py')
 gnuplot_prog = find_program(['gnuplot', 'C:/Program Files/gnuplot/bin/gnuplot'],
                             required: false)
 
-github_base_project_url = 'https://github.com/germandiagogomez/the-cpp-abstraction-penalty'
-
-
 run_target('run_benchmarks_suite',
            command: [run_benchmarks_suite_prog])
 
@@ -17,13 +14,8 @@ if gnuplot_prog.found()
 
   git_current_branch = run_command(git_prog, 'branch', '--show-current', check: true).stdout().strip()
 
-  if git_current_branch == 'master'
-    github_url = github_base_project_url / git_current_branch
-  else
-    github_url = github_base_project_url / 'tree' / git_current_branch
-  endif
   run_target('generate_plots',
-             command: [generate_plots, gnuplot_prog.path(), github_url])
+             command: [generate_plots, gnuplot_prog.path()])
   
   generate_org_table_prog = find_program('scripts/benchmars_table_generator.py')
   run_target('generate_readme_org', command: [generate_org_table_prog])
