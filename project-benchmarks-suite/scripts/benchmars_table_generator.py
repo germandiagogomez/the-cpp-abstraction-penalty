@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
-
 from util import *
 from typing import List
 import itertools as it
 import os.path as op
+import os
 import shutil 
+import subprocess as sp
+import json
+from pathlib import Path
+from itertools import groupby
+from collections import defaultdict
+
 
 BENCHMARKS_ALREADY_INSTALLED_FILE = op.join(BUILD_OUTPUT_DIR_BASE, '.benchmarks_already_installed')
-
+    
 class BenchmarksTableGenerator:
     def __init__(self, config_names: List[str]):
         self.config_names = tuple(config_names)
@@ -44,19 +50,19 @@ class BenchmarksTableGenerator:
     def _generate_configuration_host_details_entry(config_name):
         config_file_detail_link = op.join(FINAL_OUTPUT_DIR_BASE, 'config_details', config_name + '.md')
         display = config_name
-        return BenchmarksTableGenerator._generate_org_link(config_file_detail_link, display)
+        return generate_org_link(config_file_detail_link, display)
 
 
     @staticmethod
     def _generate_benchmarks_results_entry(config_names):
-        return BenchmarksTableGenerator._generate_org_link(op.join(FINAL_OUTPUT_DIR_BASE, '!'.join(config_names), 'results.org'), 'Results')
+        return generate_org_link(op.join(FINAL_OUTPUT_DIR_BASE, '!'.join(config_names), 'results.org'), 'Results')
 
 
     @staticmethod
     def _generate_configuration_file_entry(config_name):
         config_file_link = get_native_file_for_config(config_name) 
         user_display = config_name
-        return BenchmarksTableGenerator._generate_org_link(config_file_link, user_display)
+        return generate_org_link(config_file_link, user_display)
 
     @staticmethod
     def _generate_org_entry(config_names):
@@ -84,6 +90,7 @@ class BenchmarksTableGenerator:
             for config_pair in sorted(self._existing_config_names, key=lambda e: e[0] + '!' + e[1]):
                 table_rows.append(BenchmarksTableGenerator._generate_org_entry(config_pair))
             return '\n'.join(table_rows)
+
 
 if __name__ == '__main__':
     os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))

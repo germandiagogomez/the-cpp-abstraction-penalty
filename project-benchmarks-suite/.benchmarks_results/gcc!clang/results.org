@@ -1,17 +1,29 @@
  - Formatted read
+   - Old style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/02-formatted_read/sscanf_formatted_read.cpp][sscanf_formatted_read.cpp]]
+   - Modern style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/02-formatted_read/stringstream_formatted_read.cpp][stringstream_formatted_read.cpp]]
 [[plots/formatted-read.png]]
 
- - Memcmp vs equal
-[[plots/memcmp-vs-equal.png]]
-
- - Trivial type copy
-[[plots/trivial-type-copy.png]]
-
- - Qsort vs stl sort
-[[plots/qsort-vs-stl-sort.png]]
+ - Non trivial type copy
+   - Old style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/04-non-trivial-type-copy/use_for_loop.cpp][use_for_loop.cpp]]
+   - Modern style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/04-non-trivial-type-copy/use_std_copy.cpp][use_std_copy.cpp]]
+[[plots/non-trivial-type-copy.png]]
 
  - Memset vs fill
+   - Old style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/07-memset-vs-fill/use_memset.cpp][use_memset.cpp]]
+   - Modern style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/07-memset-vs-fill/use_std_fill.cpp][use_std_fill.cpp]]
 [[plots/memset-vs-fill.png]]
 
- - Non trivial type copy
-[[plots/non-trivial-type-copy.png]]
+ - Qsort vs stl sort
+   - Old style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/05-qsort-vs-stl-sort/qsort.cpp][qsort.cpp]]
+   - Modern style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/05-qsort-vs-stl-sort/stl_sort.cpp][stl_sort.cpp]]
+[[plots/qsort-vs-stl-sort.png]]
+
+ - Trivial type copy
+   - Old style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/03-trivial-type-copy/use_memcpy.cpp][use_memcpy.cpp]]
+   - Modern style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/03-trivial-type-copy/use_std_copy.cpp][use_std_copy.cpp]]
+[[plots/trivial-type-copy.png]]
+
+ - Memcmp vs equal
+   - Old style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/06-memcmp-vs-equal/use_memcmp.cpp][use_memcmp.cpp]]
+   - Modern style source: [[https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/benchmarks/06-memcmp-vs-equal/use_std_equal.cpp][use_std_equal.cpp]]
+[[plots/memcmp-vs-equal.png]]

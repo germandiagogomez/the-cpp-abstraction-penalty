@@ -43,7 +43,7 @@ I want to limit the benchmarks to code to focus
 on older vs newer styles. One benchmarks should represent
 and older way of doing something, and the modern one
 should represent the supposedly better, as in safer or
-more idiomatic way of doing something compared to the
+more idiomatic way of doing something compared to the 
 previous benchmark.
 
 It will be considered cheating to write unconventional and deeply
@@ -106,4 +106,5 @@ TODO
 |-----------------------------------------------------------------
 | Configuration files | Configuration details |Benchmark results |
 |-----------------------------------------------------------------
-|[[native-files/gcc.txt][gcc]] [[native-files/clang.txt][clang]]|[[.benchmarks_results/config_details/gcc.md][gcc]] [[.benchmarks_results/config_details/clang.md][clang]]|[[.benchmarks_results/gcc!clang/results.org][Results]]|
+|[[native-files/gcc.txt][gcc]] [[native-files/clang.txt][clang]]|[[.benchmarks_results/config_details/gcc.md][gcc]] [[.benchmarks_results/config_details/clang.md][clang]]|[[.benchmarks_results/gcc%21clang/results.org][Results]]|
+|[[native-files/gcc.txt][gcc]] [[native-files/clanggcc.txt][clanggcc]] [[native-files/clang.txt][clang]]|[[.benchmarks_results/config_details/gcc.md][gcc]] [[.benchmarks_results/config_details/clanggcc.md][clanggcc]] [[.benchmarks_results/config_details/clang.md][clang]]|[[.benchmarks_results/gcc%21clanggcc%21clang/results.org][Results]]|
