@@ -13,6 +13,7 @@ from collections import defaultdict
 
 os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))
 GNUPLOT = sys.argv[1]
+GITHUB_URL = sys.argv[2]
 PLOTS_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES), 'plots')
 RESULTS_ORG_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES))
 NATIVE_FILES = ('native-files/gcc.txt', 'native-files/clang.txt')
@@ -22,7 +23,7 @@ CONFIG_NAMES = [op.splitext(op.basename(native_file_name))[0] for native_file_na
 MESONINTROSPECT = os.environ['MESONINTROSPECT']
 
 DIR_TO_INTROSPECT_BASE = Path(os.environ['MESON_SOURCE_ROOT']).parent / 'build-all'
-GITHUB_URL = 'https://github.com/germandiagogomez/the-cpp-abstraction-penalty/tree/meson-build-migration/'
+
 
 def get_targets_sources(dir_to_introspect):
     introspect_cmd = MESONINTROSPECT + f' --targets -i {dir_to_introspect}'
