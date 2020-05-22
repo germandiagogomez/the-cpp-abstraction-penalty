@@ -11,6 +11,10 @@ from deepmerge import always_merger
 from pathlib import Path
 from util import *
 
+CONFIG_NAMES = [op.splitext(op.basename(native_file_name))[0]  for native_file_name in sys.argv[1:]]
+BUILD_DIRS = [get_build_dir_for_config(config_name) for config_name in CONFIG_NAMES]
+NATIVE_FILES_DIR = 'native-files'
+NATIVE_FILES = [op.join(NATIVE_FILES_DIR, config + '.txt') for config in CONFIG_NAMES]
 
 def configure_meson(native_file_name, build_dir, verbose, **kwargs):
     print(f'meson --native-file {native_file_name} ' + f'{build_dir}')
@@ -61,7 +65,8 @@ def write_output_data_file_for_plotting(bench_name, all_benchmarks, config_names
                     str(benchmark_name_results[config_name]['modern_style'])]) + '\n')
 
 if __name__ == '__main__':
-    os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))
+    working_dir = op.join(os.environ['MESON_SOURCE_ROOT'], '..')
+    os.chdir(working_dir)
     if not checkpoint_exists('.configured_done'):
         for i, native_file in enumerate(NATIVE_FILES):
             configure_meson(native_file, BUILD_DIRS[i], verbose=True, raise_error=False)

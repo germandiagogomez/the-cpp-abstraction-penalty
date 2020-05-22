@@ -13,13 +13,10 @@ def get_build_dir_for_config(config_name):
 MESONINTROSPECT = ['meson', 'introspect']
 BUILD_DIR_BASE = 'build-all'
 MESON_SOURCE_ROOT = os.environ['MESON_SOURCE_ROOT']
-NATIVE_FILES_DIR = 'native-files'
-NATIVE_FILES = (op.join(NATIVE_FILES_DIR, 'gcc.txt'), op.join(NATIVE_FILES_DIR, 'clang.txt'))
-CONFIG_NAMES = [op.splitext(op.basename(native_file_name))[0] for native_file_name in NATIVE_FILES]
-BUILD_DIRS = [get_build_dir_for_config(config_name) for config_name in CONFIG_NAMES]
 OUTPUT_DATA_DIR = op.join(BUILD_DIR_BASE, 'bench-results')
 BUILD_OUTPUT_DIR_BASE = op.join(BUILD_DIR_BASE, '.benchmarks_results')
 FINAL_OUTPUT_DIR_BASE = '.benchmarks_results'
+NATIVE_FILES_DIR = 'native-files'
 
 
 def run_command(command, message=None, verbose=False, raise_error=True):

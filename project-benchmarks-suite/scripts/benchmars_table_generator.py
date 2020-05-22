@@ -10,8 +10,10 @@ import json
 from pathlib import Path
 from itertools import groupby
 from collections import defaultdict
+import sys
 
 
+CONFIG_NAMES = [op.splitext(op.basename(native_file_name))[0]  for native_file_name in sys.argv[1:]]
 BENCHMARKS_ALREADY_INSTALLED_FILE = op.join(BUILD_OUTPUT_DIR_BASE, '.benchmarks_already_installed')
     
 class BenchmarksTableGenerator:

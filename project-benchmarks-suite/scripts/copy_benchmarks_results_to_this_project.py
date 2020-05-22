@@ -3,11 +3,12 @@
 import shutil
 from pathlib import Path
 from util import *
+import sys
 
+CONFIG_NAMES = [op.splitext(op.basename(native_file_name))[0]  for native_file_name in sys.argv[1:]]
 
 if __name__ == '__main__':
     os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))
-    print(os.environ['MESON_SOURCE_ROOT'])
     for cfg in CONFIG_NAMES:
         source_path = str(Path(os.environ['MESON_SOURCE_ROOT']) / '../build-all' / cfg / 'configuration_info.md')
         dest_path = str(Path(BUILD_OUTPUT_DIR_BASE) / 'config_details'/ cfg) + '.md'

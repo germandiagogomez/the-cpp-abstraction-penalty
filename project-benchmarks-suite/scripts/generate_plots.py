@@ -10,18 +10,17 @@ from util import *
 from itertools import groupby
 from collections import defaultdict
 
-
 os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))
+
 GNUPLOT = sys.argv[1]
+CONFIG_NAMES = [op.splitext(op.basename(native_file_name))[0]  for native_file_name in sys.argv[3:]]
+BUILD_DIRS = [get_build_dir_for_config(config_name) for config_name in CONFIG_NAMES]
+NATIVE_FILES = [op.join(NATIVE_FILES_DIR, config + '.txt') for config in CONFIG_NAMES]
 GITHUB_URL = sys.argv[2]
 PLOTS_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES), 'plots')
+print(PLOTS_DIR)
 RESULTS_ORG_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES))
-NATIVE_FILES = ('native-files/gcc.txt', 'native-files/clang.txt')
-CONFIG_NAMES = [op.splitext(op.basename(native_file_name))[0] for native_file_name in NATIVE_FILES]
-
-
 MESONINTROSPECT = os.environ['MESONINTROSPECT']
-
 DIR_TO_INTROSPECT_BASE = Path(os.environ['MESON_SOURCE_ROOT']).parent / 'build-all'
 
 

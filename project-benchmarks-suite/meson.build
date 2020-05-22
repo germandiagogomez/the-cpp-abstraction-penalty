@@ -7,8 +7,9 @@ gnuplot_prog = find_program(['gnuplot', '/usr/bin/gnuplot', 'C:/Program Files/gn
                             required: false)
 
 
+config_names = get_option('benchmarks-configurations')
 run_target('run_benchmarks_suite',
-           command: [run_benchmarks_suite_prog])
+           command: [run_benchmarks_suite_prog, config_names])
 
 if gnuplot_prog.found()
   git_prog = find_program('git')
@@ -17,15 +18,15 @@ if gnuplot_prog.found()
   github_url = 'https://github.com/germandiagogomez/the-cpp-abstraction-penalty/' + 'tree/' + git_current_branch + '/'
 
   run_target('generate_plots',
-             command: [generate_plots, gnuplot_prog.path(), github_url])
+             command: [generate_plots, gnuplot_prog.path(), github_url, config_names])
   
   generate_org_table_prog = find_program('scripts/benchmars_table_generator.py')
-  run_target('generate_readme_org', command: [generate_org_table_prog])
+  run_target('generate_readme_org', command: [generate_org_table_prog, config_names])
 
   # Copy benchmarks results from build directory
   copy_bench_results_to_this_project_prog = find_program('scripts/copy_benchmarks_results_to_this_project.py')
   run_target('copy_benchmarks_results',
-             command: [copy_bench_results_to_this_project_prog])
+             command: [copy_bench_results_to_this_project_prog, config_names])
 
   # Installation
   install_data('README.org',
