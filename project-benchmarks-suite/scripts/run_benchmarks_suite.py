@@ -77,15 +77,15 @@ if __name__ == '__main__':
     for i, native_file in enumerate(NATIVE_FILES[start_at:], start_at):
         run_benchmarks_for(BUILD_DIRS[i], verbose=True)    
         save_checkpoint(f'.benchmarks_run_done_{CONFIG_NAMES[i]}')
-        print(f'Done running benchmark suite for {CONFIG_NAMES[i]}')
+
     
     if not checkpoint_exists('.plot_data_generated_done'):
         bench_results = rec_defaultdict()
         for i, build_dir in enumerate(BUILD_DIRS):
             bench_results = always_merger.merge(bench_results, gather_bench_results_per_benchmark(build_dir, CONFIG_NAMES[i]))
+
         
         for bench_target in get_benchmarks_names(op.join(BUILD_DIR_BASE, CONFIG_NAMES[0])):
-            print(bench_target)
             write_output_data_file_for_plotting(bench_target, bench_results)
         save_checkpoint('.plot_data_generated_done')
         print("Data for plotting done. Checkpoint saved.")

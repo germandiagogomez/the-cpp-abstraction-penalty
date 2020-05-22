@@ -3,7 +3,7 @@ project('cpp-abstraction-penalty-suite')
 run_benchmarks_suite_prog = find_program('scripts/run_benchmarks_suite.py')
 generate_plots = find_program('scripts/generate_plots.py')
 
-gnuplot_prog = find_program(['gnuplot', 'C:/Program Files/gnuplot/bin/gnuplot'],
+gnuplot_prog = find_program(['gnuplot', '/usr/bin/gnuplot', 'C:/Program Files/gnuplot/bin/gnuplot'],
                             required: false)
 
 

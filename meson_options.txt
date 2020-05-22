@@ -1,1 +1,5 @@
 option('per-benchmark-timeout', type : 'integer', min : 30, max : 120, value : 30)
+option('benchmarks-configurations', type: 'array',
+       description : 'Configs to benchmark. Must be size 2. Get name from native-files/ dir.',
+       value: ['gcc', 'clang'])
+

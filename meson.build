@@ -21,5 +21,6 @@ host_config = configuration_data({
                                     'CPU_COUNT': 'unknown'
                                   })
 
+message(meson.current_build_dir())
 configure_file(input: 'config/configuration_info.md.in',
                output: 'configuration_info.md', configuration: host_config)
