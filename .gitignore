@@ -1,4 +1,7 @@
 *~
 do_not_optimize*.txt
 build-*/
+__pycache__/project-benchmarks-suite/.benchmarks_results/
+project-benchmarks-suite/.benchmarks_results/
+.benchmarks_already_installed
 __pycache__/
