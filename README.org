@@ -104,7 +104,7 @@ TODO
 
 * Benchmarks results
 |-----------------------------------------------------------------
-| Configuration files | Configuration details |Benchmark results |
+| Compiler files | Configuration details |Benchmark results |
 |-----------------------------------------------------------------
 |[[native-files/gcc.txt][gcc]] [[native-files/clang.txt][clang]]|[[.benchmarks_results/config_details/gcc.md][gcc]] [[.benchmarks_results/config_details/clang.md][clang]]|[[.benchmarks_results/gcc%21clang/results.org][Results]]|
 |[[native-files\msvc2019.txt][msvc2019]] [[native-files\mingw-w64.txt][mingw-w64]]|[[.benchmarks_results\config_details\msvc2019.md][msvc2019]] [[.benchmarks_results\config_details\mingw-w64.md][mingw-w64]]|[[.benchmarks_results\msvc2019%21mingw-w64\results.org][Results]]|
