@@ -9,6 +9,7 @@ from pathlib import Path
 from util import *
 from itertools import groupby
 from collections import defaultdict
+import platform
 
 os.chdir(op.join(os.environ['MESON_SOURCE_ROOT'], '..'))
 
@@ -18,7 +19,6 @@ BUILD_DIRS = [get_build_dir_for_config(config_name) for config_name in CONFIG_NA
 NATIVE_FILES = [op.join(NATIVE_FILES_DIR, config + '.txt') for config in CONFIG_NAMES]
 GITHUB_URL = sys.argv[2]
 PLOTS_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES), 'plots')
-print(PLOTS_DIR)
 RESULTS_ORG_DIR = op.join(BUILD_DIR_BASE, '.benchmarks_results', '!'.join(CONFIG_NAMES))
 MESONINTROSPECT = os.environ['MESONINTROSPECT']
 DIR_TO_INTROSPECT_BASE = Path(os.environ['MESON_SOURCE_ROOT']).parent / 'build-all'
@@ -26,7 +26,13 @@ DIR_TO_INTROSPECT_BASE = Path(os.environ['MESON_SOURCE_ROOT']).parent / 'build-a
 
 def get_targets_sources(dir_to_introspect):
     introspect_cmd = MESONINTROSPECT + f' --targets -i {dir_to_introspect}'
-    process_result = sp.run(introspect_cmd.split(' '), capture_output=True)
+    introspect_cmd_for_run = None
+    if platform.system() == 'Windows':
+        introspect_cmd_for_run = introspect_cmd.replace("'", "").split(' ')
+    else:
+        introspect_cmd_for_run = introspect_cmd.split(' ')
+
+    process_result = sp.run(introspect_cmd_for_run, capture_output=True)
     if process_result.returncode != 0:
         raise RuntimeError(f'Error invoking {introspect_cmd}')
     introspection_array = json.loads(process_result.stdout)
@@ -99,7 +105,6 @@ if not checkpoint_exists('.plots_generated'):
 
         config_folder = '!'.join(CONFIG_NAMES)
         os.makedirs(op.join(BUILD_DIR_BASE, '.benchmarks_results', config_folder), exist_ok=True)
-        
         with open(op.join(BUILD_DIR_BASE, '.benchmarks_results', config_folder, 'results.org'), 'w') as out_file:
             out_file.write('\n\n'.join(bench_results))
             save_checkpoint('.plots_generated')

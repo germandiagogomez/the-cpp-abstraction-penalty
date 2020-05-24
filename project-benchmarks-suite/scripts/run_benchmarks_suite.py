@@ -16,6 +16,7 @@ BUILD_DIRS = [get_build_dir_for_config(config_name) for config_name in CONFIG_NA
 NATIVE_FILES_DIR = 'native-files'
 NATIVE_FILES = [op.join(NATIVE_FILES_DIR, config + '.txt') for config in CONFIG_NAMES]
 
+
 def configure_meson(native_file_name, build_dir, verbose, **kwargs):
     print(f'meson --native-file {native_file_name} ' + f'{build_dir}')
     return run_command(['meson', '--native-file', f'{native_file_name}'] +
@@ -78,18 +79,15 @@ if __name__ == '__main__':
         if not checkpoint_exists(f'.benchmarks_run_done_{CONFIG_NAMES[i]}'):
             start_at = i
             break
-    
+
     for i, native_file in enumerate(NATIVE_FILES[start_at:], start_at):
         run_benchmarks_for(BUILD_DIRS[i], verbose=True)    
         save_checkpoint(f'.benchmarks_run_done_{CONFIG_NAMES[i]}')
-
     
     if not checkpoint_exists('.plot_data_generated_done'):
         bench_results = rec_defaultdict()
         for i, build_dir in enumerate(BUILD_DIRS):
             bench_results = always_merger.merge(bench_results, gather_bench_results_per_benchmark(build_dir, CONFIG_NAMES[i]))
-
-        
         for bench_target in get_benchmarks_names(op.join(BUILD_DIR_BASE, CONFIG_NAMES[0])):
             write_output_data_file_for_plotting(bench_target, bench_results)
         save_checkpoint('.plot_data_generated_done')
