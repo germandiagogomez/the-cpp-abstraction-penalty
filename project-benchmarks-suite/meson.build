@@ -3,13 +3,28 @@ project('cpp-abstraction-penalty-suite')
 run_benchmarks_suite_prog = find_program('scripts/run_benchmarks_suite.py')
 generate_plots = find_program('scripts/generate_plots.py')
 
-gnuplot_prog = find_program('gnuplot', dirs: ['/usr/bin/', 'C:/Program Files/gnuplot/bin/'],
+gnu_plot_dirs = build_machine.system() == 'windows' ? ['C:/Program Files/gnuplot/bin/'] : ['/usr/bin']
+gnuplot_prog = find_program('gnuplot', dirs: gnu_plot_dirs,
                             required: false)
 
 
 config_names = get_option('benchmarks-configurations')
+
+if host_machine.system() == 'linux'
+  ls_cpu_prog = find_program('lscpu', required: true)
+  ls_mem_prog = find_program('lsmem', required: true)
+elif host_machine.system() == 'windows'
+  #TODO
+  ls_cpu_prog = find_program('lscpu', required: true)
+  ls_mem_prog = find_program('lsmem', required: true)
+else
+  error('Unrecognized platform')
+endif
+
+
 run_target('run_benchmarks_suite',
-           command: [run_benchmarks_suite_prog, config_names])
+           command: [run_benchmarks_suite_prog, ls_cpu_prog.path(), ls_mem_prog.path(), config_names])
+
 
 if gnuplot_prog.found()
   git_prog = find_program('git')

@@ -112,3 +112,5 @@ if not checkpoint_exists('.plots_generated'):
         print(f'Exception: {e}')
         raise
     print(f'Done generating plots for benchmark suite. You can access them in {PLOTS_DIR}')
+else:
+    print(f'Plots were already generated before. You can access them in {PLOTS_DIR}')
