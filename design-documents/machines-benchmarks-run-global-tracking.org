@@ -1,0 +1,70 @@
+* Global tracking of already run benchmarks
+** Purpose
+*** Functionality
+  Be able to remember where benchmarks have been already run and with
+  which compilers to avoid adding benchmarks that have been already run.
+
+  [[./machine-identification.org]] contains how  machine/os pair identification
+  is done in more detail
+
+*** Practical application
+  The purpose of this feature is to be able to accumulate where
+  benchmarks have been already run because those results are already available
+  in the global =.benchmarks_results= directory
+
+** Design
+*** Data Model
+#+BEGIN_src python
+  @dataclass
+  class BenchmarksEnvironment:
+      env_id
+      cpu_family
+      cpu_model
+      architecture
+      num_logical_cores
+      num_hardware_cores
+      l1_cache_size_kb
+      l2_cache_size_kb
+      l3_cache_size_kb
+      operating_system_release
+
+  @dataclass
+  class BenchmarksExecution:
+      compiler1 : str
+      compiler2 : str
+      benchmarks_environment_id
+#+END_src
+
+*** Directory structure to place results
+
+1. A global file =PROJECT_ROOT/.benchmarks_results/already_run_benchmarks.db=
+   keeps track of already run benchmarks and with which compilers (compiler + version)
+
+
+The directory structure for =.benchmarks_results= is the following
+
+#+BEGIN_EXAMPLE
+.benchmarks_results/
+    already_run_benchmarks.db
+    <benchmarks-environment-hash-code>/
+        benchmarks-runner-environment.md
+        <compiler1-with-version>!<compiler2-with-version>/
+           all-results-here
+#+END_EXAMPLE
+
+*** Decision algorithm to check if benchmarks are already in the benchmarks set
+
+An algorithm is used to decide whether the benchmarks for a given set of compilers +
+environment have been run:
+
+#+BEGIN_EXAMPLE
+  environment_hash = get_benchmarks_environment().hashid
+  benchmarks_run_db = connect('dbstring')
+  benchmarks_run_already = BenchmarksExecution.select(BenchmarksExecution.benchmarks_environment_id)
+  .where((BenchmarksExecution.benchmarks_environment_id == environment_hash) &
+  (BenchmarksExecution.compiler1 == compiler1) &
+  (BenchmarksExecution.compiler2 == compiler2)).count())
+  if benchmarks_run_already > 0:
+     return True
+  return False
+#+END_EXAMPLE

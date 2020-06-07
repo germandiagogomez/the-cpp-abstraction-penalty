@@ -1,0 +1,53 @@
+* Machine and OS identification and classification
+
+** Purpose
+
+  Be able to identify the machine/os pair (environment) where benchmarks are run
+
+** Design
+
+*** What does uniquely identify an environment?
+
+  The following data will be used to identify the environment (and *only* this data)
+  A deterministic hash of the combination of these parameters is also stored
+
+  1. cpu family
+  2. cpu model
+  3. architecture
+  4. Number of logical cores
+  5. Number of hardware cores
+  6. Level 1 cache
+  7. Level 2 cache
+  8. Level 3 cache
+  9. operating system using platform win32_ver/mac_ver/uname from Python 3 platform API
+
+  When two machine/os combination match exactly all the fields above they are considered to be the same thing
+  as far as it goes for the identification.
+
+*** Data model
+#+BEGIN_src python
+  @dataclass
+  class BenchmarksEnvironment:
+      env_id
+      cpu_family
+      cpu_model
+      architecture
+      num_logical_cores
+      num_hardware_cores
+      l1_cache_size_kb
+      l2_cache_size_kb
+      l3_cache_size_kb
+      operating_system_release
+#+END_src
+*** Data to show to humans
+
+  1. cpu brand name
+  2. Operating system name and release
+  3. max frequency
+  4. Number of logical CPUs
+  5. Number of hardware CPUs
+  5. caches l1/l2/l3
+  6. cpu flags
+
+Python packages py-cpuinfo and psutil combined with platform module from Python can be used to retrieve all
+of the above data.
